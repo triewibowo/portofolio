@@ -11,6 +11,7 @@ class Cart extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $search = '';
+    public $payment = '';
 
     public $tax = "0%";
 
@@ -145,4 +146,7 @@ class Cart extends Component
         $this->resetPage();
     }
     
+    public function handleSubmit(){
+        dd($this->payment);
+    }
 }

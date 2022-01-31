@@ -15,7 +15,7 @@
                         <div class="col-md-3 mb-3 mt-2">
                             <div class="card">
                                 <div class="card-body">
-                                    <img src="{{ asset('storage/images/' . $product->image) }}" alt="product"
+                                    <img src="{{ asset('storage/public/images/' . $product->image) }}" alt="product"
                                         style="object-fit: contain;width:100%;height:100px;">
                                 </div>
                                 <div class="card-footer">
@@ -85,10 +85,52 @@
                     <button wire:click="enableTax" class="btn btn-primary btn-block">Add Tax</button>
                     <button wire:click="disableTax" class="btn btn-danger btn-block">Remove Tax</button>
                 </div>
-                <div class="mt-4">
-                    <button class="btn btn-success btn-block">Save Transaction</button>
+
+                <div class="form-group">
+                    <input type="number" wire:model="payment" class="form-control mt-4" id="payment" placeholder="input Payment">
+                    <input type="hidden" id="total" value="{{ $summary['total'] }}">
                 </div>
+
+                <form wire:submit.prevent="handleSubmit">
+                <div class="mt-3">
+                    <label for="paymenttext">Total Uang</label>
+                    <h4 wire:ignore id="paymentText">Rp. 0</h4>
+                </div>
+
+                <div>
+                    <label for="kembalian">Kembalian</label>
+                    <h4 wire:ignore id="kembalianText">Rp. 0</h4>
+                </div>
+                
+
+                <div class="mt-4">
+                    <button wire:ignore disabled class="btn btn-success btn-block" id="saveButton">Save Transaction</button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
 </div>
+
+@push('script-custom')
+<script>
+    payment.oninput = () => {
+        const paymentAmount = document.getElementById("payment").value
+        const totalAmount = document.getElementById("total").value
+
+        const kembalian = paymentAmount - totalAmount
+
+        // document.getElementById("kembalianText").innerHTML = `Rp ${rupiah(kembalian)} ,00`
+        document.getElementById("kembalianText").innerHTML = new Intl.NumberFormat('id',{ style: 'currency', currency: 'IDR' }).format(kembalian)
+        document.getElementById("paymentText").innerHTML = new Intl.NumberFormat('id',{ style: 'currency', currency: 'IDR' }).format(paymentAmount)
+
+        const saveButton =  document.getElementById("saveButton")
+
+        if(kembalian < 0){
+            saveButton.disabled = true
+        }else{
+            saveButton.disabled = false
+        }
+    }
+</script>
+@endpush
