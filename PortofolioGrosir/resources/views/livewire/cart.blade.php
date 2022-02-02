@@ -86,10 +86,10 @@
                     {{ 'Rp' . number_format($summary['sub_total'], 2, ',', '.') }}</h5>
                 <h5 class="font-weight-bold">Tax: {{ 'Rp' . number_format($summary['pajak'], 2, ',', '.') }}</h5>
                 <h5 class="font-weight-bold">Total: {{ 'Rp' . number_format($summary['total'], 2, ',', '.') }}</h5>
-                <div>
+                {{-- <div>
                     <button wire:click="enableTax" class="btn btn-primary btn-block">Add Tax</button>
                     <button wire:click="disableTax" class="btn btn-danger btn-block">Remove Tax</button>
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                     <input type="number" wire:model="payment" class="form-control mt-4" id="payment"
@@ -127,7 +127,6 @@
 
             const kembalian = paymentAmount - totalAmount
 
-            // document.getElementById("kembalianText").innerHTML = `Rp ${rupiah(kembalian)} ,00`
             document.getElementById("kembalianText").innerHTML = new Intl.NumberFormat('id', {
                 style: 'currency',
                 currency: 'IDR'
