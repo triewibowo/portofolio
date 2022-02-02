@@ -14,7 +14,7 @@ class Transaction extends Model
     protected $keyType = 'string';
     protected $guarded = [];
 
-    protected $table = 'transcations';
+    protected $table = 'transactions';
 
     public function product(){
         return $this->hasMany(ProductTransaction::class, 'invoice_number', 'invoice_number' );

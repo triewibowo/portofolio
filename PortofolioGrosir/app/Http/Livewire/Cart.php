@@ -2,16 +2,21 @@
 
 namespace App\Http\Livewire;
 use App\Models\Product as ModelsProduct;
+use App\Models\Transaction;
+use App\Models\ProductTransaction;
+
 use Livewire\Component;
 use Carbon\Carbon;
 use Livewire\WithPagination;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use DB;
 
 class Cart extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $search = '';
-    public $payment = '';
+    public $payment = 0;
 
     public $tax = "0%";
 
@@ -69,29 +74,37 @@ class Cart extends Component
 
     public function addItem($id){
         $rowId = "Cart".$id;
+
+        $idProduct = substr($rowId, 4,5);
+        $product   = ModelsProduct::find($idProduct);
+
         $cart  = \Cart::session(Auth()->id())->getContent();
         $cekItemId = $cart->whereIn('id', $rowId);
 
-        if($cekItemId->isNotEmpty()){
-            \Cart::session(Auth()->id())->update($rowId, [
-                'quantity' => [
-                    'relative' => true,
-                    'value' => 1
-                ]
-                ]);
-        }else{
-            $product = ModelsProduct::findOrFail($id);
-            \Cart::session(Auth()->id())->add([
-                'id' => "Cart".$product->id,
-                'name' => $product->name,
-                'price' => $product->price,
-                'quantity' => 1,
-                'attributes' => [
-                    'added_at' => Carbon::now()
-                ],
-            ]);
-        }
-    }
+    
+            if($cekItemId->isNotEmpty()){
+                \Cart::session(Auth()->id())->update($rowId, [
+                    'quantity' => [
+                        'relative' => true,
+                        'value' => 1
+                    ]
+                    ]);
+            }
+            elseif($product->qty == 0) {
+                    return session()->flash('error', 'Jumlah item kurang');
+            }else{
+                    \Cart::session(Auth()->id())->add([
+                        'id' => "Cart".$product->id,
+                        'name' => $product->name,
+                        'price' => $product->price,
+                        'quantity' => 1,
+                        'attributes' => [
+                            'added_at' => Carbon::now()
+                        ],
+                    ]);       
+            }   
+ }
+
 
     public function enableTax(){
         $this->tax = "+10%";
@@ -110,12 +123,16 @@ class Cart extends Component
         if($product->qty == $checkitem[$rowId]->quantity){
             session()->flash('error', 'Jumlah Tidak Cukup');
         }else{
+            if($product->qty == 0){
+                return session()->flash('error', 'Jumlah item kurang');
+            }else{
             \Cart::session(Auth()->id())->update($rowId,[
                 'quantity' => [
                     'relative' => true,
                     'value' => 1
                 ]
             ]);
+        }
         }
      }
 
@@ -146,7 +163,65 @@ class Cart extends Component
         $this->resetPage();
     }
     
+
     public function handleSubmit(){
-        dd($this->payment);
+        $cartTotal = \Cart::session(Auth()->id())->getTotal();
+        $bayar = $this->payment;
+        $kembalian = (int) $bayar - (int) $cartTotal;
+
+        if($kembalian >= 0){
+            DB::beginTransaction();
+
+            try{
+               $allCart = \Cart::session(Auth()->id())->getContent();
+
+               $filterCart = $allCart->map(function ($item) {
+                return [
+                    'id' => substr($item->id, 4,5 ),
+                    'quantity' => $item->quantity
+                ];
+            });
+
+            foreach ($filterCart as $cart) {
+                $product = ModelsProduct::find($cart['id']);
+
+                if($product->qty === 0){
+                    return session()->flash('error', 'Jumlah item kurang');
+                }
+
+                $product->decrement('qty', $cart['quantity']);
+            }
+
+            $id = IdGenerator::generate([
+                'table' => 'transactions',
+                'length' => 10,
+                'prefix' => 'INV-',
+                'field'  => 'invoice_number'
+            ]);
+
+            Transaction::create([
+                'invoice_number' => $id,
+                'user_id' => Auth()->id(),
+                'pay'     => $bayar,
+                'total'   => $cartTotal  
+            ]);
+
+            foreach ($filterCart as $cart) {
+                ProductTransaction::create([
+                    'product_id' => $cart['id'],
+                    'invoice_number' => $id,
+                    'qty' => $cart['quantity']
+                ]);
+            }
+
+            \Cart::session(Auth()->id())->clear();
+            $this->payment = 0;
+
+                DB::commit();
+            }catch (\Throwable $th){
+                DB::rollback();
+                return session()->flash('error', $th);
+            }
+        }
     }
 }

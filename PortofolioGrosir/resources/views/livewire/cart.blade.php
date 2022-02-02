@@ -35,8 +35,13 @@
     </div>
     <div class="col-md-4">
         <div class="card">
+            <h2 class="font-weight-bold">Cart</h2>
             <div class="card-body">
-                <h2 class="font-weight-bold">Cart</h2>
+                @if (session()->has('error'))
+                    <p class="text-danger font-weight-bold">
+                        {{ session('error') }}
+                    </p>
+                @endif
                 <table class="table table-sm table-bordered table-hovered">
                     <thead class="bg-secondary text-white">
                         <tr>
@@ -87,50 +92,58 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="number" wire:model="payment" class="form-control mt-4" id="payment" placeholder="input Payment">
+                    <input type="number" wire:model="payment" class="form-control mt-4" id="payment"
+                        placeholder="input Payment">
                     <input type="hidden" id="total" value="{{ $summary['total'] }}">
                 </div>
 
                 <form wire:submit.prevent="handleSubmit">
-                <div class="mt-3">
-                    <label for="paymenttext">Total Uang</label>
-                    <h4 wire:ignore id="paymentText">Rp. 0</h4>
-                </div>
+                    <div class="mt-3">
+                        <label for="paymenttext">Total Uang</label>
+                        <h4 wire:ignore id="paymentText">Rp. 0</h4>
+                    </div>
 
-                <div>
-                    <label for="kembalian">Kembalian</label>
-                    <h4 wire:ignore id="kembalianText">Rp. 0</h4>
-                </div>
-                
+                    <div>
+                        <label for="kembalian">Kembalian</label>
+                        <h4 wire:ignore id="kembalianText">Rp. 0</h4>
+                    </div>
 
-                <div class="mt-4">
-                    <button wire:ignore disabled class="btn btn-success btn-block" id="saveButton">Save Transaction</button>
-                </div>
-            </form>
+
+                    <div class="mt-4">
+                        <button wire:ignore type="submit" id="saveButton" disabled class="btn btn-success btn-block"
+                            id="saveButton"><i class="fas fa-save fa-lg"></i> Save Transaction</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 @push('script-custom')
-<script>
-    payment.oninput = () => {
-        const paymentAmount = document.getElementById("payment").value
-        const totalAmount = document.getElementById("total").value
+    <script>
+        payment.oninput = () => {
+            const paymentAmount = document.getElementById("payment").value
+            const totalAmount = document.getElementById("total").value
 
-        const kembalian = paymentAmount - totalAmount
+            const kembalian = paymentAmount - totalAmount
 
-        // document.getElementById("kembalianText").innerHTML = `Rp ${rupiah(kembalian)} ,00`
-        document.getElementById("kembalianText").innerHTML = new Intl.NumberFormat('id',{ style: 'currency', currency: 'IDR' }).format(kembalian)
-        document.getElementById("paymentText").innerHTML = new Intl.NumberFormat('id',{ style: 'currency', currency: 'IDR' }).format(paymentAmount)
+            // document.getElementById("kembalianText").innerHTML = `Rp ${rupiah(kembalian)} ,00`
+            document.getElementById("kembalianText").innerHTML = new Intl.NumberFormat('id', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(kembalian)
+            document.getElementById("paymentText").innerHTML = new Intl.NumberFormat('id', {
+                style: 'currency',
+                currency: 'IDR'
+            }).format(paymentAmount)
 
-        const saveButton =  document.getElementById("saveButton")
+            const saveButton = document.getElementById("saveButton")
 
-        if(kembalian < 0){
-            saveButton.disabled = true
-        }else{
-            saveButton.disabled = false
+            if (kembalian < 0) {
+                saveButton.disabled = true
+            } else {
+                saveButton.disabled = false
+            }
         }
-    }
-</script>
+    </script>
 @endpush
