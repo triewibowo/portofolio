@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->string('invoice_number');
-            $table->bigInteger('user_id')->unsigned();
+            $table->foreignId('user_id');
             $table->integer('pay');
             $table->integer('total');
             $table->timestamps();

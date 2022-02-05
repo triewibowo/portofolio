@@ -20,6 +20,7 @@ class Transaction extends Model
         return $this->hasMany(ProductTransaction::class, 'invoice_number', 'invoice_number' );
     }
 
+
     public function user(){
         return $this->belongsTo(User::class);
     }

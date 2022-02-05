@@ -60,5 +60,8 @@ class Product extends Component
             $this->desc         = '';
             $this->qty          = '';
             $this->price        = '';
+
+            $this->emit('confirm');
+            // $this->dispatchBrowserEvent('closeModal');
     }
 }

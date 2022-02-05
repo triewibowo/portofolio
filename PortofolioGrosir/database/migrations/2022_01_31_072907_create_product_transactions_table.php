@@ -15,7 +15,7 @@ class CreateProductTransactionsTable extends Migration
     {
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id')->unsigned();
+            $table->foreignId('product_id');
             $table->string('invoice_number');
             $table->bigInteger('qty')->unsigned();
             $table->timestamps();

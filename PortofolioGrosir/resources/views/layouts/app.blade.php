@@ -76,7 +76,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                        document.getElementById('logout-form').submit();">
+                                                                                                                                    document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -100,6 +100,14 @@
     </div>
 
     @livewireScripts
+    <script>
+        // window.addEventListener('closeModal', event => {
+        //     $("#modal").modal('hide');
+        // });
+        window.addEventListener('closeModal', event => {
+                    alert('Name updated to: );
+                    });
+    </script>
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false" data-turbo-eval="false"></script>
     @stack('script-custom')
