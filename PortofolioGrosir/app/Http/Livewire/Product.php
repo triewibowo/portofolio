@@ -11,7 +11,11 @@ use Livewire\Component;
 class Product extends Component
 {
     use WithFileUploads;
-    public $name,$image,$desc,$qty,$price,$category_id;
+    public $name,$image = null,$desc,$qty,$price,$category_id,$productId;
+    public $iteration = 1;
+
+    // public $isOpen = 0;
+    // public $edit = 0;
 
     public function render()
     {
@@ -30,6 +34,7 @@ class Product extends Component
         $this->validate([
             'name'          => 'required',
             'image'         => 'image|max:2048|required',
+            'category_id'   => 'required',
             'desc'          => 'required',
             'qty'           => 'required',
             'price'         => 'required',
@@ -43,7 +48,7 @@ class Product extends Component
             $imageName
         );
 
-        ModelsProduct::create([
+        ModelsProduct::updateOrCreate(['id' => $this->productId],[
             'name'          => $this->name,
             'image'         => $imageName,
             'desc'          => $this->desc,
@@ -54,14 +59,28 @@ class Product extends Component
 
         session()->flash('info', 'Product Created Successfully');
 
-            $this->name         = '';
-            $this->image        = '';
-            $this->category_id  = '';
-            $this->desc         = '';
-            $this->qty          = '';
-            $this->price        = '';
+            $this->resetFilters();         
+    }
 
-            $this->emit('confirm');
-            // $this->dispatchBrowserEvent('closeModal');
+    public function resetFilters(){
+        $this->reset();
+        $this->iteration++;
+    }
+
+    public function create(){
+        redirect('create');
+    }
+
+    public function edit($id){
+
+
+        $product = ModelsProduct::findOrFail($id);
+        $this->productId = $id;
+        $this->name = $product->name;
+        $this->image = $product->image;
+        $this->desc = $product->desc;
+        $this->category_id  = $product->category_id;
+        $this->qty  = $product->qty;
+        $this->price    = $product->price;
     }
 }

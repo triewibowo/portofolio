@@ -11,6 +11,7 @@ class Category extends Component
 {
     use WithFileUploads;
     public $name;
+    public $categoryId;
 
     public function render()
     {
@@ -23,12 +24,26 @@ class Category extends Component
             'name'          => 'required',
         ]);
 
-        ModelsCategory::create([
-            'name'          => $this->name,
+        ModelsCategory::updateOrCreate(['id' => $this->categoryId],[
+            'name'          => $this->name
         ]);
 
         session()->flash('info', 'Product Created Successfully');
 
             $this->name         = '';
+    }
+
+    public function edit($id){
+        $category = ModelsCategory::findOrFail($id);
+        $this->categoryId = $id;
+        $this->name = $category->name;
+    }
+
+    public function resetFilter(){
+        $this->reset();
+    }
+
+    public function delete($id){
+        $category = ModelsCategory::findOrFail($id)->delete();
     }
 }

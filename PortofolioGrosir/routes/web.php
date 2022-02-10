@@ -3,8 +3,10 @@
 use App\Http\Livewire\Cart;
 use App\Http\Livewire\Product;
 use App\Http\Livewire\Category;
+use App\Http\Livewire\Create;
 use App\Http\Livewire\ProductTransaction;
-use App\Http\Livewire\Invoice;
+use App\Http\Livewire\Invoice; 
+use App\Http\Livewire\Chart; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +30,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('/products', Product::class);
+    Route::get('/chart', Chart::class);
+    Route::get('/create', Create::class);
     Route::get('/api/products', [App\Http\Livewire\Product::class, 'api']);
     Route::get('/categories', Category::class);
     Route::get('/cart', Cart::class);
