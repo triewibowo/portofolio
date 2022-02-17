@@ -84,7 +84,10 @@ class Cart extends Component
         $cart  = \Cart::session(Auth()->id())->getContent();
         $cekItemId = $cart->whereIn('id', $rowId);
 
-    
+        if($cekItemId->isNotEmpty()){
+            return session()->flash('error', 'Jumlah item kurang');
+        }else{
+            
             if($cekItemId->isNotEmpty()){
                 \Cart::session(Auth()->id())->update($rowId, [
                     'quantity' => [
@@ -101,10 +104,12 @@ class Cart extends Component
                         'price' => $product->price,
                         'quantity' => 1,
                         'attributes' => [
-                            'added_at' => Carbon::now()
+                            'added_at' => Carbon::now(),
+                            'status' => true
                         ],
-                    ]);       
+                    ]); 
             }   
+        } 
  }
 
 
@@ -219,6 +224,7 @@ class Cart extends Component
 
                         \Cart::session(Auth()->id())->clear();
                         $this->payment = 0;
+                        $this->dispatchBrowserEvent('format');
 
                             DB::commit();
                         }catch (\Throwable $th){

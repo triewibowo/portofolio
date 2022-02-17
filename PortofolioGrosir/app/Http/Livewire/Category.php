@@ -14,9 +14,13 @@ class Category extends Component
     public $categoryId;
 
     public function render()
-    {
+    {   
+        if(Auth()->user()->can('CRUD')){
         $categories = ModelsCategory::OrderBy('created_at', 'DESC')->get();
         return view('livewire.category', compact('categories'));
+        }else{
+            return abort('403');
+        }
     }
 
     public function store(){

@@ -20,13 +20,14 @@
                                 </div>
                                 <div class="card-footer">
                                     <h6 class="text-center font-sm">{{ $product->name }}</h6>
-                                    <button wire:click="addItem({{ $product->id }})" class="btn btn-primary">Add To
+                                    <button wire:click="addItem({{ $product->id }})" class="btn btn-primary"
+                                        id="Btn">Add To
                                         Cart</button>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <h5 class="text-center sm mt-5">No Product Found</h4>
+                        <h5 class="  text-center sm mt-5">No Product Found</h4>
                     @endforelse
                 </div>
             </div>
@@ -135,6 +136,18 @@
                 style: 'currency',
                 currency: 'IDR'
             }).format(paymentAmount)
+
+            window.addEventListener('format', event => {
+                document.getElementById("kembalianText").innerHTML = new Intl.NumberFormat('id', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(0)
+
+                document.getElementById("paymentText").innerHTML = new Intl.NumberFormat('id', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(0)
+            })
 
             const saveButton = document.getElementById("saveButton")
 

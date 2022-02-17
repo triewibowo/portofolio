@@ -16,9 +16,13 @@ class Create extends Component
 
     public function render()
     {
+        if(Auth()->user()->can('CRUD')){
         $products = ModelsProduct::with('category')->OrderBy('created_at', 'DESC')->get();
         $categories = ModelsCategory::all();
         return view('livewire.create', compact('products', 'categories'));
+        }else{
+            return abort('403');
+        }
     }
 
     public function temporaryUrl(){

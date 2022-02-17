@@ -19,9 +19,13 @@ class Product extends Component
 
     public function render()
     {
-        $products = ModelsProduct::with('category')->OrderBy('created_at', 'DESC')->get();
-        $categories = ModelsCategory::all();
-        return view('livewire.product', compact('products', 'categories'));
+        if(Auth()->user()->can('CRUD')){
+            $products = ModelsProduct::with('category')->OrderBy('created_at', 'DESC')->get();
+            $categories = ModelsCategory::all();
+            return view('livewire.product', compact('products', 'categories'));
+        }else{
+            return abort('403');
+        }
     }
 
     public function temporaryUrl(){
