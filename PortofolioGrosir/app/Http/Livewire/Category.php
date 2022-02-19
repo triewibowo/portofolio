@@ -34,7 +34,7 @@ class Category extends Component
 
         session()->flash('info', 'Product Created Successfully');
 
-            $this->name         = '';
+            $this->resetFilter();
     }
 
     public function edit($id){

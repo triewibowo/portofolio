@@ -16,15 +16,15 @@ class Cart extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $search = '';
-    public $payment = 0;
+    public $payment;
 
     public $tax = "+10%";
+    public $orderBy;
 
     public function render()
     {
 
-        $products = ModelsProduct::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(12);
-
+        $products = ModelsProduct::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(4);
         $condition = new \Darryldecode\Cart\CartCondition([
             'name'      => 'pajak',
             'type'      => 'tax',
@@ -168,6 +168,10 @@ class Cart extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function OrderBy(){
+        $this->products = ModelsProduct::OrderBy($this->orderBy, 'DESC')->paginate(4);
     }
 
     public function handleSubmit(){

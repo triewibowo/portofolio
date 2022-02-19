@@ -12,7 +12,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+
 
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
@@ -28,9 +31,6 @@
     <link href="{{ asset('css/style2.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet">
-
-
-
     @livewireStyles
 </head>
 
@@ -49,7 +49,7 @@
                     <span class="nav_logo-name">Grosir Avicena</span>
                 </a>
                 <div class="nav_list">
-                    <a href="{{ url('/chart') }}" class="nav_link {{ request()->is('chart') ? 'active' : '' }}">
+                    <a href="{{ url('/home') }}" class="nav_link {{ request()->is('home') ? 'active' : '' }}">
                         <i class='bx bx-grid-alt nav_icon'></i>
                         <span class="nav_name">Dashboard</span>
                     </a>
@@ -143,6 +143,10 @@
         linkColor.forEach(l => l.addEventListener('click', colorLink))
 
         // Your code to run since DOM is loaded and ready
+    });
+
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+        new mdb.Input(formOutline).init();
     });
 </script>
 

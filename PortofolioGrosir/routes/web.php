@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -32,9 +32,10 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function(){
     
     Route::get('/products', Product::class);
-    Route::get('/chart', Chart::class);
+    Route::get('/home', Chart::class);
     Route::get('/create', Create::class);
     Route::get('/api/products', [App\Http\Livewire\Product::class, 'api']);
+    Route::get('/api/home', [App\Http\Livewire\Chart::class, 'api']);
     Route::get('/api/role', [App\Http\Livewire\Role::class, 'api']);
     Route::get('/categories', Category::class);
     Route::get('/role', Role::class);
@@ -42,6 +43,4 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/cart', Cart::class);
     Route::get('/histories', ProductTransaction::class);
     Route::get('/invoices', Invoice::class);
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });

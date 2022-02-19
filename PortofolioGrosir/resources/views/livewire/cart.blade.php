@@ -1,121 +1,226 @@
-<div class="row">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body p-3">
-                <div class="row">
-                    <div class="col">
-                        <h2 class="font-weight-bold">Products List</h2>
-                    </div>
-                    <div class="col"><input wire:model="search" type="text" class="form-control"
-                            placeholder="find something...">
-                    </div>
+<div>
+    <div class="mb-4">
+        <h3 class="text-muted">Cashier</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card p-1">
+                <div class="card-header">
+                    <h5 class="text-muted">Product List</h5>
                 </div>
-                <div class="row">
-                    @forelse ($products as $product)
-                        <div class="col-md-3 mb-3 mt-2">
-                            <div class="card">
-                                <div class="card-body">
-                                    <img src="{{ asset('storage/public/images/' . $product->image) }}" alt="product"
-                                        style="object-fit: contain;width:100%;height:100px;">
-                                </div>
-                                <div class="card-footer">
-                                    <h6 class="text-center font-sm">{{ $product->name }}</h6>
-                                    <button wire:click="addItem({{ $product->id }})" class="btn btn-primary"
-                                        id="Btn">Add To
-                                        Cart</button>
-                                </div>
+                <div class="card-body p-2">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">Action</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                    data-mdb-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    @foreach ($products as $item)
+                                        <li wire:model="orderBy" class="dropdown-item">
+                                            {{ $item->category->name }}
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
-                    @empty
-                        <h5 class="  text-center sm mt-5">No Product Found</h4>
-                    @endforelse
-                </div>
-            </div>
-            {{ $products->links() }}
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <h2 class="font-weight-bold">Cart</h2>
-            <div class="card-body">
-                @if (session()->has('error'))
-                    <p class="text-danger font-weight-bold">
-                        {{ session('error') }}
-                    </p>
-                @endif
-                <table class="table table-sm table-bordered table-hovered">
-                    <thead class="bg-secondary text-white">
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($carts as $index=>$cart)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>
-                                    <a href="#" class="font-weight-bold text-dark">{{ $cart['name'] }}</a>
-                                    <br>
-                                    Qty: {{ $cart['qty'] }}
-                                    <span wire:click="increaseItem('{{ $cart['rowId'] }}')"
-                                        class="font-weight-bold text-secondary"
-                                        style="font-size: 18px;cursor: pointer">+</span>
-                                    <span wire:click="decreaseItem('{{ $cart['rowId'] }}')"
-                                        class="font-weight-bold text-secondary"
-                                        style="font-size: 18px;cursor: pointer">-</span>
-                                    <span wire:click="removeItem('{{ $cart['rowId'] }}')"
-                                        class="font-weight-bold text-secondary"
-                                        style="font-size: 13px;cursor: pointer">x</span>
-                                </td>
-                                <td>{{ 'Rp' . number_format($cart['price'], 2, ',', '.') }}</td>
-                            </tr>
+                        <div class="col-4">
+                            <div class="input-group mt-3 mb-2">
+                                <input wire:model="search" id="search-input" type="search" class="form-control rounded"
+                                    placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <button type="button" class="btn btn-success">search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @forelse ($products as $product)
+                            <div class="col-md-6 mt-2">
+                                <div wire:click="addItem({{ $product->id }})" class="card mb-3 border p-2"
+                                    style="max-width: 540px; cursor: pointer;">
+                                    <div class="icon_dash"><i class='bx bxs-cart-add' id="icon"></i></div>
+                                    <div class="row g-0">
+                                        <div class="col-md-4 pt-3">
+                                            <img src="{{ asset('storage/public/images/' . $product->image) }}"
+                                                alt="product" style="object-fit: contain;"
+                                                class="img-fluid rounded-start">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $product->name }}</h5>
+                                                <p class="card-text" style="height: 50px;">
+                                                    {{ $product->desc }}
+                                                </p>
+                                                <span class="card-text fw-bold">
+                                                    {{ 'Rp' . number_format($product->price, 2, ',', '.') }}
+                                                </span>
+                                                <p class="card-text"><small class="text-muted">Product Quantity
+                                                        {{ $product->qty }}</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @empty
-                            <td colspan="3">
-                                <h6 class="text-center">Empty Cart</h6>
-                            </td>
+                            <h5 class="text-center sm mt-5">No Product Found</h4>
                         @endforelse
-                    </tbody>
-                </table>
+                    </div>
+                </div>
+                <div class="pt-1">
+                    {{ $products->links() }}
+                </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="font-weight-bold">Cart Summary</h4>
-                <h5 class="font-weight-bold">Sub Total:
-                    {{ 'Rp' . number_format($summary['sub_total'], 2, ',', '.') }}</h5>
-                <h5 class="font-weight-bold">Tax: {{ 'Rp' . number_format($summary['pajak'], 2, ',', '.') }}</h5>
-                <h5 class="font-weight-bold">Total: {{ 'Rp' . number_format($summary['total'], 2, ',', '.') }}</h5>
-                {{-- <div>
-                    <button wire:click="enableTax" class="btn btn-primary btn-block">Add Tax</button>
-                    <button wire:click="disableTax" class="btn btn-danger btn-block">Remove Tax</button>
-                </div> --}}
-
-                <div class="form-group">
-                    <input type="number" wire:model="payment" class="form-control mt-4" id="payment"
-                        placeholder="input Payment">
-                    <input type="hidden" id="total" value="{{ $summary['total'] }}">
+        <div class="col-md-5">
+            <div class="card p-1 mb-4">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-2">
+                            <h5 class="text-muted">Cart</h5>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="text-muted text-end">{{ Auth::user()->name }}</h5>
+                        </div>
+                    </div>
                 </div>
-
-                <form wire:submit.prevent="handleSubmit">
-                    <div class="mt-3">
-                        <label for="paymenttext">Total Uang</label>
-                        <h4 wire:ignore id="paymentText">Rp. 0</h4>
-                    </div>
-
-                    <div>
-                        <label for="kembalian">Kembalian</label>
-                        <h4 wire:ignore id="kembalianText">Rp. 0</h4>
-                    </div>
-
-
-                    <div class="mt-4">
-                        <button wire:ignore type="submit" id="saveButton" disabled class="btn btn-success btn-block"
-                            id="saveButton"><i class="fas fa-save fa-lg"></i> Save Transaction</button>
-                    </div>
-                </form>
+                <div class="card-body">
+                    @if (session()->has('error'))
+                        <p class="text-danger font-weight-bold">
+                            {{ session('error') }}
+                        </p>
+                    @endif
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Name</th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th scope="col">Action</th>
+                                <th scope="col" class="text-end">Price</th>
+                                <th scope="col" class="text-end"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($carts as $index=>$cart)
+                                <tr>
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td>
+                                        <span href="#">{{ $cart['name'] }}</span>
+                                    </td>
+                                    <td scope="row" class="text-center">
+                                        {{ $cart['qty'] }}
+                                    </td>
+                                    <td>
+                                        <i wire:click="increaseItem('{{ $cart['rowId'] }}')"
+                                            class='bx bxs-plus-circle' data-bs-toggle="tooltip" title="Add Quantity"
+                                            style="font-size: 30px;cursor: pointer; color:#00B74A;"></i>
+                                        <i wire:click="decreaseItem('{{ $cart['rowId'] }}')"
+                                            class='bx bxs-minus-circle' data-bs-toggle="tooltip" title="Less Quantity"
+                                            style="font-size: 30px;cursor: pointer; color:#FFA900;"></i>
+                                    </td>
+                                    <td scope="row" class="text-end">
+                                        {{ 'Rp' . number_format($cart['price'], 2, ',', '.') }}
+                                    </td>
+                                    <td>
+                                        <i wire:click="removeItem('{{ $cart['rowId'] }}')" class='bx bxs-x-circle'
+                                            data-bs-toggle="tooltip" title="Delete"
+                                            style="font-size: 20px;cursor: pointer; color:#F93154;"></i>
+                                    </td>
+                                </tr>
+                            @empty
+                                <td colspan="6">
+                                </td>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <div wire:ignore class="tenor-gif-embed mb-4" data-postid="19923243"
+                                data-share-method="host" data-aspect-ratio="1" data-width="100%"><a
+                                    href="https://tenor.com/view/mikotill-smile-3d-gif-19923243">Mikotill Smile
+                                    Sticker</a>from <a href="https://tenor.com/search/mikotill-stickers">Mikotill
+                                    Stickers</a>
+                            </div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                        </div>
+                        <div class="card-footer">
+                            <p class="card-text"><small class="text-muted">Don't Forget to Smile</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div>
+                                        <h5 class="text-muted sm text-end">Sub Total : </h5>
+                                        <hr>
+                                        <h5 class="text-muted sm text-end">Tax : </h5>
+                                        <hr>
+                                        <h5 class="text-muted sm text-end">Total : </h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div>
+                                        <h5 class="text-muted sm text-end">
+                                            {{ 'Rp. ' . number_format($summary['sub_total'], 2, ',', '.') }}</h5>
+                                        <hr>
+                                        <h5 class="text-muted sm text-end">
+                                            {{ 'Rp. ' . number_format($summary['pajak'], 2, ',', '.') }}
+                                        </h5>
+                                        <hr>
+                                        <h5 class="text-muted sm text-end">
+                                            {{ 'Rp. ' . number_format($summary['total'], 2, ',', '.') }}
+                                        </h5>
+                                        <hr>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <form wire:submit.prevent="handleSubmit">
+                                <div class="col">
+                                    <div wire:ignore class="form-outline">
+                                        <input type="number" wire:model="payment" class="form-control rounded mb-3"
+                                            id="payment" id="typeNumber">
+                                        <label class="form-label" for="payment">Input Payment</label>
+                                        <input type="hidden" id="total" value="{{ $summary['total'] }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+
+                                        <h5 class="text-muted sm text-end">Total Cash : </h5>
+                                        <hr>
+                                        <h5 class="text-muted sm text-end">Chance : </h5>
+                                        <hr>
+                                    </div>
+                                    <div class="col">
+                                        <h5 wire:ignore class="text-muted sm text-end" id="paymentText">Rp. 0</h5>
+                                        <hr>
+                                        <h5 wire:ignore class="text-muted sm text-end" id="kembalianText">Rp. 0</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <button wire:ignore type="submit" id="saveButton" disabled
+                                        class="btn btn-success btn-block" id="saveButton"><i
+                                            class="fas fa-save fa-lg"></i> Save Transaction</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

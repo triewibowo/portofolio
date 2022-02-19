@@ -40,5 +40,10 @@
         {{ isset($slot) ? $slot : null }}
     </main>
 </body>
+<script>
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+        new mdb.Input(formOutline).init();
+    });
+</script>
 
 </html>

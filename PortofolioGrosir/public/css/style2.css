@@ -148,6 +148,48 @@ a {
     height: 100vh
 }
 
+.icon_dash {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+#form1 {
+    outline-color: #4723D9;
+}
+
+#cashier {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 20ch;
+    color: #F7F6FB;
+}
+
+#icon {
+    font-size: 40px;
+    color: #20B2AA;
+}
+
+#icon2 {
+    position: absolute;
+    bottom: 20px;
+    right: 35px;
+    font-size: 20px;
+    color: #F7F6FB;
+}
+
+#historyChart {
+    overflow-y: scroll;
+}
+
+#card-footer {
+    background-color: #20B2AA;
+    opacity: 0.6;
+}
+
+
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;

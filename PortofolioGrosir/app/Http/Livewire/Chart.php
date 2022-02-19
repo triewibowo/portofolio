@@ -9,6 +9,8 @@ use Carbon\Carbon;
 
 use DB;
 use App\Models\ProductTransaction;
+use App\Models\Product;
+use App\Models\User;
 use App\Models\Transaction;
 
 use Livewire\Component;
@@ -21,6 +23,12 @@ class Chart extends Component
                     '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
                     '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'
 ];
+
+    public function api(){
+        $history = Transaction::all();
+        // $formatHistory = $history->created_at->isoFormat('dddd, D MMMM Y');
+        return $history;
+    }
     
 
     public function render()
@@ -29,9 +37,28 @@ class Chart extends Component
         $current = Carbon::now()->format('Ymd');
 
         // profit today
-        $profit_today = Transaction::select(DB::raw("SUM(Total) as total"))->whereDate('created_at', $current)->first()->total;
-        // dd($profit_today);
+        $profit_today = Transaction::select(DB::raw("SUM(total) as total"))->whereDate('created_at', $current)->first()->total;
 
+        // Guest today
+        $guest_today = Transaction::select(DB::raw("COUNT(*) as total"))->whereDate('created_at', $current)->first()->total;
+
+        // Product today
+        $product_today = Product::select('products.name', DB::raw("SUM(product_transactions.qty) as qty"))
+        ->Join('product_transactions', 'products.id', '=', 'product_transactions.product_id')
+        ->groupBy('products.name')
+        ->orderBy('qty', 'DESC')
+        ->whereDate('product_transactions.created_at', $current)
+        ->limit(1)
+        ->first()
+        ->name;
+        // dd($product_today);
+
+        // History
+        $history = Transaction::with('user')->orderBy('created_at', 'DESC')->whereDate('created_at', $current)->get();
+
+        // Total Product
+        $total_product = Product::select(DB::raw("COUNT(*) as total"))->first()->total;
+       
         // Month
         foreach (range(1,12) as $month) {
             $data_month1[] = ProductTransaction::select(DB::raw("COUNT(*) as total"))->whereMonth('created_at', $month)->first()->total;
@@ -70,6 +97,7 @@ class Chart extends Component
             ->withDataLabels();
         // End Pie
 
+
         // Column MultiLine
         $colChart = (new ColumnChartModel());
         foreach (array_combine($this->hari , $data_day) as $hari => $item) {
@@ -85,6 +113,7 @@ class Chart extends Component
         $year = Carbon::now()->isoFormat('Y');
 
         // dd($pieChart);
-        return view('livewire.chart', compact('chart', 'pieChart', 'colChart', 'today', 'year', 'profit_today'));
+        return view('livewire.chart', compact('chart', 'pieChart', 'colChart', 'today', 'year',
+                                              'profit_today', 'guest_today', 'product_today', 'total_product', 'history'));
     }
 }
