@@ -11,27 +11,26 @@
                 </div>
                 <div class="card-body p-2">
                     <div class="row">
-                        <div class="col-8">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">Action</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                                    data-mdb-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    @foreach ($products as $item)
-                                        <li wire:model="orderBy" class="dropdown-item">
-                                            {{ $item->category->name }}
-                                        </li>
+                        <div class="col-2">
+                            <div class="input-group mt-3 mb-2">
+                                <select wire:model="search" class="form-select form-control rounded"
+                                    aria-label="Default select example">
+                                    <option value="" selected>Category</option>
+                                    @foreach ($categories as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
-                                </ul>
+                                </select>
                             </div>
+                        </div>
+                        <div class="col-6">
+
                         </div>
                         <div class="col-4">
                             <div class="input-group mt-3 mb-2">
                                 <input wire:model="search" id="search-input" type="search" class="form-control rounded"
                                     placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="button" class="btn btn-success">search</button>
+                                <button type="button" class="btn"
+                                    style="background-color: #20B2AA; color:aliceblue;">search</button>
                             </div>
                         </div>
                     </div>
@@ -54,7 +53,7 @@
                                                     {{ $product->desc }}
                                                 </p>
                                                 <span class="card-text fw-bold">
-                                                    {{ 'Rp' . number_format($product->price, 2, ',', '.') }}
+                                                    {{ 'Rp ' . number_format($product->price, 2, ',', '.') }}
                                                 </span>
                                                 <p class="card-text"><small class="text-muted">Product Quantity
                                                         {{ $product->qty }}</small></p>
@@ -68,7 +67,7 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="pt-1">
+                <div class="d-flex justify-content-center pt-1">
                     {{ $products->links() }}
                 </div>
             </div>
@@ -141,22 +140,27 @@
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <div class="card-body">
-                            <div wire:ignore class="tenor-gif-embed mb-4" data-postid="19923243"
-                                data-share-method="host" data-aspect-ratio="1" data-width="100%"><a
-                                    href="https://tenor.com/view/mikotill-smile-3d-gif-19923243">Mikotill Smile
-                                    Sticker</a>from <a href="https://tenor.com/search/mikotill-stickers">Mikotill
-                                    Stickers</a>
-                            </div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                        <div class="card-header text-center">
+                            <h5 class="text-muted">Transaction History</h5>
+                        </div>
+                        <div class="card-body p-3" id="historyChart" style="height: 22rem;">
+                            @foreach ($history as $item)
+                                <span style="font-size: 12px">{{ $item->created_at->format('h:i:s A') }} -
+                                    {{ $item->invoice_number }} - Cashier {{ $item->user->name }} - Total
+                                    {{ 'Rp ' . number_format($item->total, 2, ',', '.') }} -
+                                    Bayar
+                                    {{ 'Rp ' . number_format($item->pay, 2, ',', '.') }}</span>
+                                <hr>
+                            @endforeach
                         </div>
                         <div class="card-footer">
-                            <p class="card-text"><small class="text-muted">Don't Forget to Smile</small></p>
+
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="height: 27rem;">
                             <div class="row">
                                 <div class="col">
                                     <div>
@@ -183,7 +187,6 @@
                                         <hr>
                                     </div>
                                 </div>
-
                             </div>
 
                             <form wire:submit.prevent="handleSubmit">
@@ -211,8 +214,8 @@
                                     </div>
                                 </div>
                                 <div class="mt-2">
-                                    <button wire:ignore type="submit" id="saveButton" disabled
-                                        class="btn btn-success btn-block" id="saveButton"><i
+                                    <button wire:ignore type="submit" id="saveButton" disabled class="btn btn-block"
+                                        style="background-color: #20B2AA; color:aliceblue;" id="saveButton"><i
                                             class="fas fa-save fa-lg"></i> Save Transaction</button>
                                 </div>
                             </form>

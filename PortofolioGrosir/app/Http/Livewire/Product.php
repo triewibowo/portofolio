@@ -4,23 +4,26 @@ namespace App\Http\Livewire;
 
 use App\Models\Product as ModelsProduct;
 use App\Models\Category as ModelsCategory;
+
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Livewire\Component;
+use Illuminate\Http\Request;
 
 class Product extends Component
 {
     use WithFileUploads;
-    public $name,$image = null,$desc,$qty,$price,$category_id,$productId;
-    public $iteration = 1;
+    use WithPagination;
 
-    // public $isOpen = 0;
-    // public $edit = 0;
+    protected $paginationTheme = 'bootstrap';
+    public $search = '';
+    public $name,$image,$desc,$qty,$price,$category_id,$productId;
 
     public function render()
     {
         if(Auth()->user()->can('CRUD')){
-            $products = ModelsProduct::with('category')->OrderBy('created_at', 'DESC')->get();
+            $products = ModelsProduct::where('name', 'like', '%'.$this->search.'%', 'OR', 'category_id','like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(15);
             $categories = ModelsCategory::all();
             return view('livewire.product', compact('products', 'categories'));
         }else{
@@ -28,16 +31,11 @@ class Product extends Component
         }
     }
 
-    public function temporaryUrl(){
-        $this->validate([
-            'image' => 'image|max:2048'
-        ]);
-    }
 
     public function store(){
         $this->validate([
             'name'          => 'required',
-            'image'         => 'image|max:2048|required',
+            'image'         => 'image|max:2042|required',
             'category_id'   => 'required',
             'desc'          => 'required',
             'qty'           => 'required',
@@ -52,7 +50,7 @@ class Product extends Component
             $imageName
         );
 
-        ModelsProduct::updateOrCreate(['id' => $this->productId],[
+        ModelsProduct::create([
             'name'          => $this->name,
             'image'         => $imageName,
             'desc'          => $this->desc,
@@ -63,21 +61,27 @@ class Product extends Component
 
         session()->flash('info', 'Product Created Successfully');
 
-            $this->resetFilters();         
+        // if($request->oldImage){
+        //     Storage::delete($request->oldImage);
+        // }
+
+        $this->resetFilters();         
     }
 
     public function resetFilters(){
         $this->reset();
-        $this->iteration++;
     }
 
     public function create(){
         redirect('create');
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function edit($id){
-
-
         $product = ModelsProduct::findOrFail($id);
         $this->productId = $id;
         $this->name = $product->name;
@@ -86,5 +90,55 @@ class Product extends Component
         $this->category_id  = $product->category_id;
         $this->qty  = $product->qty;
         $this->price    = $product->price;
+    }
+
+    public function update(){
+        $this->validate([
+            'name'          => 'required',
+            'category_id'   => 'required',
+            'desc'          => 'required',
+            'qty'           => 'required',
+            'price'         => 'required',
+        ]);
+
+        
+
+        $product = ModelsProduct::findOrFail($this->productId);
+        $product->update([
+            'name'          => $this->name,
+            'desc'          => $this->desc,
+            'category_id'   => $this->category_id,
+            'qty'           => $this->qty,
+            'price'         => $this->price,
+        ]);
+
+        $this->resetFilters();
+        $this->emit('close');
+    }
+
+    public function updateImage(){
+
+        $this->validate([
+            'image'         => 'image|max:2042|required',
+        ]);
+
+        $imageName = md5($this->image.microtime().'.'.$this->image->extension());
+
+        Storage::putFileAs(
+            'public/images',
+            $this->image,
+            $imageName
+        );
+
+        $product = ModelsProduct::findOrFail($this->productId);
+        $product->update([
+            'image'          => $imageName
+        ]);
+
+        $this->resetFilters();
+    }
+
+    public function delete($id){
+        $category = ModelsProduct::findOrFail($id)->delete();
     }
 }

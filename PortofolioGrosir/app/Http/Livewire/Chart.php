@@ -49,8 +49,7 @@ class Chart extends Component
         ->orderBy('qty', 'DESC')
         ->whereDate('product_transactions.created_at', $current)
         ->limit(1)
-        ->first()
-        ->name;
+        ->first();
         // dd($product_today);
 
         // History
@@ -78,7 +77,7 @@ class Chart extends Component
         // Chart Column
         $chart = (new ColumnChartModel());
         foreach (array_combine($this->bulan , $data_month) as $bulan => $item) {
-            $chart->addColumn($bulan, $item, $faker->hexColor());
+            $chart->addColumn($bulan, $item, '#20B2AA');
         }
 
         $chart
@@ -101,7 +100,7 @@ class Chart extends Component
         // Column MultiLine
         $colChart = (new ColumnChartModel());
         foreach (array_combine($this->hari , $data_day) as $hari => $item) {
-            $colChart->addColumn($hari, $item, $faker->hexColor());
+            $colChart->addColumn($hari, $item, '#20B2AA');
         }  
 
         $colChart

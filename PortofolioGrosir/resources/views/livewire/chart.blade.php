@@ -40,15 +40,21 @@
                             <div class="icon_dash"><i class='bx bxs-cart-alt' id="icon"></i></div>
                             <p class="card-title">Often Sale Today</p>
                             @if ($product_today)
-                                <h4 class="card-text">{{ $product_today }}</h4>
+                                <h4 class="card-text">{{ $product_today->name }}</h4>
                             @else
                                 <h4 class="card-text">Empty</h4>
                             @endif
                         </div>
                         <div class="card-footer text-muted" id="card-footer">
-                            <span class="fw-light" id="cashier">
-                                <i class='bx bxs-calculator' id="icon2"></i> {{ Auth::user()->name }}
-                            </span>
+                            @if ($product_today)
+                                <span class="fw-light" id="cashier">
+                                    <i class='bx bxs-calculator' id="icon2"></i> {{ $product_today->qty }}
+                                </span>
+                            @else
+                                <span class="fw-light" id="cashier">
+                                    <i class='bx bxs-calculator' id="icon2"></i> Empty
+                                </span>
+                            @endif
                         </div>
                     </div>
                 </div>

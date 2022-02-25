@@ -16,7 +16,6 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
 
-
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"></script>
 
@@ -31,14 +30,66 @@
     <link href="{{ asset('css/style2.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet">
+    @yield('css')
     @livewireStyles
 </head>
 
 <body id="body-pd" style="background-color: #F5F5F5;">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <header class="header shadow" id="header">
+
+            @php
+                $qty = \DB::select('select * from products where qty = 0');
+            @endphp
+
             <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-            <div> {{ Auth::user()->name }} </div>
+            <div class="dropdown" id="notificationIcon">
+                <a class="nav-item" href="#" role="button" data-bs-display="static" id="dropdownMenuLink"
+                    data-mdb-toggle="dropdown" aria-expanded="false">
+                    <i class='bx bxs-bell' style="color: black"></i>
+                </a>
+                @if ($qty)
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                        style="font-size: 12px">
+                        {{ COUNT($qty) }}
+                    </span>
+                @endif
+                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuLink">
+                    <div class="card">
+                        <div class="card-header">
+                            Notification
+                        </div>
+                        <div class="card-body" id="historyChart" style="height: 8rem;">
+                            @forelse ($qty as $item)
+                                <div class="row">
+                                    <div class="col-2 me-2">
+                                        <img class="pb-3"
+                                            src="{{ asset('storage/public/images/' . $item->image) }}" alt=""
+                                            data-holder-rendered="true" style="height: 50px; padding-top: 5px;">
+                                    </div>
+                                    <div class="col ms-2">
+                                        <span class="d-block"
+                                            style="font-size: 12px; font-weight:bold;">{{ $item->name }}</span>
+                                        <span style="font-size: 12px">Stock is empty</span>
+                                    </div>
+                                </div>
+                                <hr>
+                            @empty
+                                <div class="d-flex justify-content-center">
+                                    <span style="opacity: 0.5;">no notification</span>
+                                </div>
+                            @endforelse
+                        </div>
+                        <div class="card-footer text-center text-muted">
+                            <a href="{{ url('/products') }}" style="color: black; opacity: 0.5;">View all
+                                Notification</a>
+                        </div>
+                    </div>
+            </div>
+
+            </ul>
+            </div>
+            <div id="cashierNotif" style="color: black">{{ Auth::user()->name }} </div>
         </header>
     </nav>
     <div class="l-navbar" id="nav-bar">
@@ -67,8 +118,8 @@
                         <i class='bx bx-bookmark nav_icon'></i>
                         <span class="nav_name">Category</span>
                     </a>
-                    <a href="{{ url('/histories') }}"
-                        class="nav_link {{ request()->is('histories') ? 'active' : '' }}">
+                    <a href="{{ url('/invoices') }}"
+                        class="nav_link {{ request()->is('invoices') ? 'active' : '' }}">
                         <i class='bx bx-folder nav_icon'></i>
                         <span class="nav_name">History</span>
                     </a>

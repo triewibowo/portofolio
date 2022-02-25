@@ -1,28 +1,24 @@
-<div class="d-flex justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-body">
-                <h2 class="font-weight-bold mb-3">Product Transaction Log</h2>
-                <table class="table table-bordered table-hovered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Product</th>
-                            <th>Invoice Number</th>
-                            <th>Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($products as $item)
-                            <tr>
-                                <td>{{ $item->created_at }}</td>
-                                <td>{{ $item->product->name }}</td>
-                                <td>{{ $item->invoice_number }}</td>
-                                <td>{{ $item->qty }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+@section('css')
+    <link href="{{ asset('css/style3.css') }}" rel="stylesheet">
+@endsection
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Timeline</h6>
+                    <div id="content">
+                        <ul class="timeline">
+                            @foreach ($products as $product)
+                                <li class="event" data-date="{{ $product->created_at }}">
+                                    <h3>{{ $product->product_id }}</h3>
+                                    <p class="text-muted">Invoice Number : {{ $product->invoice_number }}</p>
+                                    <p class="text-muted">Quantity : {{ $product->qty }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

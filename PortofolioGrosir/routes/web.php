@@ -7,6 +7,7 @@ use App\Http\Livewire\Create;
 use App\Http\Livewire\ProductTransaction;
 use App\Http\Livewire\Invoice; 
 use App\Http\Livewire\Chart; 
+use App\Http\Livewire\AppLayout; 
 use App\Http\Livewire\Role; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,5 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/role', Role::class);
 
     Route::get('/cart', Cart::class);
-    Route::get('/histories', ProductTransaction::class);
     Route::get('/invoices', Invoice::class);
 });

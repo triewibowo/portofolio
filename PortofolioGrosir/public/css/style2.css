@@ -154,6 +154,17 @@ a {
     right: 25px;
 }
 
+#notificationIcon {
+    position: absolute;
+    top: 17px;
+    right: 155px;
+    font-size: 1.5rem;
+}
+
+input[type="file"] {
+    display: none;
+}
+
 #form1 {
     outline-color: #4723D9;
 }
@@ -167,8 +178,18 @@ a {
     color: #F7F6FB;
 }
 
+#cashierNotif {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 10ch;
+    color: #F7F6FB;
+}
+
 #icon {
-    font-size: 40px;
+    font-size: 30px;
+    opacity: 0.3;
     color: #20B2AA;
 }
 
@@ -187,6 +208,15 @@ a {
 #card-footer {
     background-color: #20B2AA;
     opacity: 0.6;
+}
+
+#categoryFilter {
+    background-color: #20B2AA;
+    color: aliceblue;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 

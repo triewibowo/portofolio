@@ -5,18 +5,23 @@ namespace App\Http\Livewire;
 use App\Models\Category as ModelsCategory;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class Category extends Component
 {
     use WithFileUploads;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+    public $search = '';
     public $name;
     public $categoryId;
 
     public function render()
     {   
         if(Auth()->user()->can('CRUD')){
-        $categories = ModelsCategory::OrderBy('created_at', 'DESC')->get();
+        $categories = ModelsCategory::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(10);
         return view('livewire.category', compact('categories'));
         }else{
             return abort('403');
@@ -34,7 +39,7 @@ class Category extends Component
 
         session()->flash('info', 'Product Created Successfully');
 
-            $this->resetFilter();
+        $this->resetFilter();
     }
 
     public function edit($id){
@@ -45,6 +50,11 @@ class Category extends Component
 
     public function resetFilter(){
         $this->reset();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 
     public function delete($id){

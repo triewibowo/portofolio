@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use App\Models\Product as ModelsProduct;
 use App\Models\Transaction;
+use App\Models\Category;
 use App\Models\ProductTransaction;
 
 use Livewire\Component;
@@ -14,17 +15,21 @@ use DB;
 class Cart extends Component
 {
     use WithPagination;
+
     protected $paginationTheme = 'bootstrap';
     public $search = '';
     public $payment;
 
     public $tax = "+10%";
-    public $orderBy;
 
     public function render()
     {
+        $current = Carbon::now()->format('Ymd');
 
-        $products = ModelsProduct::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(4);
+        // History
+        $history = Transaction::with('user')->orderBy('created_at', 'DESC')->whereDate('created_at', $current)->get();
+        $categories = Category::all();
+        $products = ModelsProduct::where('name', 'like', '%'.$this->search.'%', 'OR', 'category_id','like', '%'.$this->search.'%' )->OrderBy('created_at', 'DESC')->paginate(4);
         $condition = new \Darryldecode\Cart\CartCondition([
             'name'      => 'pajak',
             'type'      => 'tax',
@@ -71,6 +76,8 @@ class Cart extends Component
         return view('livewire.cart', [
             'products'      => $products,
             'carts'         => $cartData,
+            'categories'    => $categories,
+            'history'       => $history,
             'summary'       => $summary
         ]);
     }
@@ -168,10 +175,6 @@ class Cart extends Component
     public function updatingSearch()
     {
         $this->resetPage();
-    }
-
-    public function OrderBy(){
-        $this->products = ModelsProduct::OrderBy($this->orderBy, 'DESC')->paginate(4);
     }
 
     public function handleSubmit(){
