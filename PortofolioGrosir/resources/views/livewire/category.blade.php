@@ -1,12 +1,32 @@
 <div>
     <div class="mb-4">
-        <h3 class="text-muted">Product Data</h3>
+        <div class="mb-4">
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-muted">Category Data</h3>
+                </div>
+                <div class="col-3">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                                <use xlink:href="#check-circle-fill" />
+                            </svg>
+                            <div>
+                                {{ session('success') }}
+                            </div>
+                            <button type="button" class="btn-close" id="close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
     <div class="container">
         <div class="card">
             <div class="card-body">
                 <div class="card-header">
-                    <h5 class="text-muted">Product List</h5>
+                    <h5 class="text-muted">Category List</h5>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
@@ -72,7 +92,8 @@
                             <div class="form-group">
                                 <input wire:model='categoryId' type="hidden" class="form-control">
                                 <label>Category Name</label>
-                                <input wire:model='name' type="text" class="form-control">
+                                <input wire:model='name' type="text" class="form-control" name="name"
+                                    value="{{ old('name') }}">
                                 @error('name')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

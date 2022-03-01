@@ -86,9 +86,24 @@
                 </div>
                 <div class="card-body">
                     @if (session()->has('error'))
-                        <p class="text-danger font-weight-bold">
-                            {{ session('error') }}
-                        </p>
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                                <use xlink:href="#exclamation-triangle-fill" />
+                            </svg>
+                            <div>
+                                {{ session('error') }}
+                            </div>
+                        </div>
+                    @endif
+                    @if (session()->has('success'))
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                                <use xlink:href="#check-circle-fill" />
+                            </svg>
+                            <div>
+                                {{ session('success') }}
+                            </div>
+                        </div>
                     @endif
                     <table class="table table-hover">
                         <thead>
@@ -200,7 +215,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-
                                         <h5 class="text-muted sm text-end">Total Cash : </h5>
                                         <hr>
                                         <h5 class="text-muted sm text-end">Chance : </h5>

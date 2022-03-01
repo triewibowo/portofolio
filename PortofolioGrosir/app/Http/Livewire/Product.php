@@ -19,6 +19,7 @@ class Product extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
     public $name,$image,$desc,$qty,$price,$category_id,$productId;
+    public $deleteId = '';
 
     public function render()
     {
@@ -59,13 +60,8 @@ class Product extends Component
             'price'         => $this->price,
         ]);
 
-        session()->flash('info', 'Product Created Successfully');
-
-        // if($request->oldImage){
-        //     Storage::delete($request->oldImage);
-        // }
-
-        $this->resetFilters();         
+        $this->resetFilters();   
+        return session()->flash('success', 'Data has been created');      
     }
 
     public function resetFilters(){
@@ -113,7 +109,7 @@ class Product extends Component
         ]);
 
         $this->resetFilters();
-        $this->emit('close');
+        return session()->flash('update', 'Data has been updated'); 
     }
 
     public function updateImage(){
@@ -136,9 +132,15 @@ class Product extends Component
         ]);
 
         $this->resetFilters();
+        return session()->flash('update', 'Image has been updated'); 
     }
 
-    public function delete($id){
-        $category = ModelsProduct::findOrFail($id)->delete();
+    public function deleteId($id){
+        $this->deleteId = $id;
+    }
+
+    public function delete(){
+        $category = ModelsProduct::findOrFail($this->deleteId)->delete();
+        return session()->flash('update', 'Data has been Deleted'); 
     }
 }

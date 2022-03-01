@@ -28,7 +28,7 @@
                                     <div class="form-outline mb-4">
                                         <input type="text" id="form2Example17"
                                             class="form-control form-control-lg @error('name') is-invalid @enderror"
-                                            name="name" value="{{ old('email') }}" autocomplete="email" autofocus />
+                                            name="name" value="{{ old('name') }}" autocomplete="email" autofocus />
                                         <label class="form-label" for="form2Example17">Name</label>
 
                                         @error('name')

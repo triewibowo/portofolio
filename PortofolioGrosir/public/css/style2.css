@@ -103,6 +103,14 @@ a {
     color: var(--white-color)
 }
 
+.userText {
+    color: black;
+}
+
+.userText:hover {
+    color: #20B2AA;
+}
+
 .nav_logo-name {
     color: var(--white-color);
     font-weight: 700
@@ -151,6 +159,12 @@ a {
 .icon_dash {
     position: absolute;
     top: 25px;
+    right: 25px;
+}
+
+#close {
+    position: absolute;
+    top: 20px;
     right: 25px;
 }
 

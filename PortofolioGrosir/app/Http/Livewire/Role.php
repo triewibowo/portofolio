@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 use Spatie\Permission\Models\Role as ModelRole;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 use Livewire\Component;
@@ -14,13 +15,14 @@ class Role extends Component
 
     public function api(){
         $users = User::with('roles')->get();
+        $auth  = Auth::user();
         return $users;
     }
 
     public function render()
     {   
         if(Auth()->user()->can('CRUD')){
-        $users = User::all();
+        $users = User::with('roles')->get();
         return view('livewire.role', compact('users'));
         }else{
             return abort('403');
@@ -28,10 +30,15 @@ class Role extends Component
         
     }
 
+    public function resetField(){
+        $this->name = '';
+    }
+
     public function roleCreate(){
         $user = User::where('id', $this->userId)->first();
         $user->assignRole('admin');
         $this->reset();
+        return session()->flash('success', 'Successfully'); 
     }
 
     public function roleEdit($id){
@@ -45,5 +52,6 @@ class Role extends Component
         $user = User::findOrFail($id);
         // dd($user);
         $user->removeRole('admin');
+        return session()->flash('success', 'Successfully'); 
     }
 }

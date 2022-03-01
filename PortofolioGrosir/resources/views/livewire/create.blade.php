@@ -13,7 +13,8 @@
                         <div class="form-group mb-3 p-1">
                             <input wire:model='productId' type="hidden" class="form-control">
                             <label>Product Name</label>
-                            <input wire:model='name' type="text" class="form-control">
+                            <input wire:model='name' type="text" class="form-control" name="name"
+                                value="{{ old('name') }}">
                             @error('name')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -52,7 +53,7 @@
                         <div class="form-group mb-3 p-1">
                             <label>Product Category</label>
                             <select wire:model='category_id' class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
+                                <option selected value="0">Open this select menu</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">
                                         {{ $category->name }}</option>
@@ -64,21 +65,24 @@
                         </div>
                         <div class="form-group mb-3 p-1">
                             <label>Product Description</label>
-                            <textarea wire:model='desc' class="form-control"></textarea>
+                            <textarea wire:model='desc' class="form-control" name="desc"
+                                value="{{ old('desc') }}"></textarea>
                             @error('desc')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="form-group mb-3 p-1">
                             <label>Product Quantity</label>
-                            <input wire:model='qty' type="number" class="form-control">
+                            <input wire:model='qty' type="number" class="form-control" name="qty"
+                                value="{{ old('qty') }}">
                             @error('qty')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="form-group mb-3 p-1">
                             <label>Product Price</label>
-                            <input wire:model='price' type="number" class="form-control">
+                            <input wire:model='price' type="number" class="form-control" name="price"
+                                value="{{ old('price') }}">
                             @error('price')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

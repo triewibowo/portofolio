@@ -92,7 +92,7 @@ class Cart extends Component
         $cekItemId = $cart->whereIn('id', $rowId);
 
         if($cekItemId->isNotEmpty()){
-            return session()->flash('error', 'Jumlah item kurang');
+            return session()->flash('error', 'Item has been chosen');
         }else{
             
             if($cekItemId->isNotEmpty()){
@@ -103,7 +103,7 @@ class Cart extends Component
                     ]
                     ]);
             }elseif($product->qty == 0) {
-                    return session()->flash('error', 'Jumlah item kurang');
+                    return session()->flash('error', 'Out of stock');
             }else{
                     \Cart::session(Auth()->id())->add([
                         'id' => "Cart".$product->id,
@@ -135,10 +135,10 @@ class Cart extends Component
         $checkitem = $cart->WhereIn('id', $rowId);
 
         if($product->qty == $checkitem[$rowId]->quantity){
-            session()->flash('error', 'Jumlah Tidak Cukup');
+            session()->flash('error', 'Item is out of stock');
         }else{
             if($product->qty == 0){
-                return session()->flash('error', 'Jumlah item kurang');
+                return session()->flash('error', 'out of stock');
             }else{
             \Cart::session(Auth()->id())->update($rowId,[
                 'quantity' => [
@@ -177,6 +177,10 @@ class Cart extends Component
         $this->resetPage();
     }
 
+    public function clear(){
+        $this->dispatchBrowserEvent('format');
+    }
+
     public function handleSubmit(){
         $cartTotal = \Cart::session(Auth()->id())->getTotal();
         $cart = \Cart::session(Auth()->id())->getContent();
@@ -201,7 +205,7 @@ class Cart extends Component
                             $product = ModelsProduct::find($cart['id']);
 
                             if($product->qty === 0){
-                                return session()->flash('error', 'Jumlah item kurang');
+                                return session()->flash('error', 'Out of stock');
                             }
 
                             $product->decrement('qty', $cart['quantity']);
@@ -232,8 +236,8 @@ class Cart extends Component
                         \Cart::session(Auth()->id())->clear();
                         $this->payment = 0;
                         $this->dispatchBrowserEvent('format');
-
                             DB::commit();
+                            return session()->flash('success', 'Transaction successfully');
                         }catch (\Throwable $th){
                             DB::rollback();
                             return session()->flash('error', $th);
@@ -241,7 +245,7 @@ class Cart extends Component
                     }
                 }else{
                     $this->payment = 0;
-                    return session()->flash('error', 'Masukan Product');
+                    return session()->flash('error', 'Enter Product');
                 }
        
     }
