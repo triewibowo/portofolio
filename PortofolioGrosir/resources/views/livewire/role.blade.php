@@ -61,7 +61,7 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->roles->name }}</td>
+                                    <td>{{ $user->roles }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         <i wire:click="roleEdit({{ $user->id }})" class='bx bxs-edit'

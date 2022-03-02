@@ -115,7 +115,7 @@ class Product extends Component
     public function updateImage(){
 
         $this->validate([
-            'image'         => 'image|max:2042|required',
+            'image'         => 'image|max:2042|dimensions:width=500,height=500|required',
         ]);
 
         $imageName = md5($this->image.microtime().'.'.$this->image->extension());

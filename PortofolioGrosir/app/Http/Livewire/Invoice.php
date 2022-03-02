@@ -15,7 +15,8 @@ class Invoice extends Component
     public function render()
     {
         $invoices = Transaction::where('invoice_number', 'like', '%'.$this->search.'%')->orderBy('created_at', 'DESC')->get();
-        $products = ProductTransaction::where('invoice_number', 'like', '%'.$this->search1.'%')->orderBy('created_at', 'DESC')->get();
+        $products = ProductTransaction::join('products', 'product_transactions.id', '=', 'products.id')->where('products.name', 'like', '%'.$this->search1.'%')->orderBy('product_transactions.created_at', 'DESC')->get();
+        // dd($products);
         return view('livewire.invoice', compact('invoices', 'products'));
     }
 }

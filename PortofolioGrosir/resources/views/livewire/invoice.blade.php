@@ -63,19 +63,19 @@
                         </div>
                     </div>
                     <div class="scroll-area">
-                        @foreach ($products as $product)
+                        @foreach ($products as $item)
                             <div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
                                 <div class="vertical-timeline-item vertical-timeline-element">
                                     <div> <span class="vertical-timeline-element-icon bounce-in"> <i
                                                 class="badge badge-dot badge-dot-xl badge-success"></i> </span>
                                         <div class="vertical-timeline-element-content bounce-in">
-                                            <h4 class="timeline-title">{{ $product->product_id }}</h4>
-                                            <p class="timeline-p">Invoice Number {{ $product->invoice_number }},
+                                            <h4 class="timeline-title">{{ $item->name }}</h4>
+                                            <p class="timeline-p">Invoice Number {{ $item->invoice_number }},
                                                 Quantity
-                                                <a href="javascript:void(0);" data-abc="true">{{ $product->qty }}</a>
+                                                <a href="javascript:void(0);" data-abc="true">{{ $item->qty }}</a>
                                             </p>
                                             <span
-                                                class="vertical-timeline-element-date">{{ $product->created_at->format('j F, Y') }}</span>
+                                                class="vertical-timeline-element-date">{{ $item->created_at->format('j F, Y') }}</span>
                                         </div>
                                     </div>
                                 </div>

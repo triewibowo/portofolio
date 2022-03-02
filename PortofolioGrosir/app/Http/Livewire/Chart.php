@@ -71,7 +71,7 @@ class Chart extends Component
 
         // Day
         foreach (range(1,31) as $day) {
-            $data_day[] = Transaction::select(DB::raw("SUM(total) as total"))->whereDay('created_at', $day)->first()->total;
+            $data_day[] = Transaction::select(DB::raw("SUM(total) as total"))->whereDay('created_at', $day)->whereMonth('created_at', date('m'))->first()->total;
         }
 
         // Chart Column
