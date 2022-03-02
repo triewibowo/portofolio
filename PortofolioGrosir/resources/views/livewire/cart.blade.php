@@ -49,14 +49,25 @@
                                         <div class="col-md-8">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $product->name }}</h5>
-                                                <p class="card-text" style="height: 50px;">
+                                                <p class="card-text" id="desc" style="height: 50px;">
                                                     {{ $product->desc }}
                                                 </p>
                                                 <span class="card-text fw-bold">
                                                     {{ 'Rp ' . number_format($product->price, 2, ',', '.') }}
                                                 </span>
-                                                <p class="card-text"><small class="text-muted">Product Quantity
-                                                        {{ $product->qty }}</small></p>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p class="card-text"><small class="text-muted">Product
+                                                                Quantity
+                                                                {{ $product->qty }}</small></p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="card-text"><small class="text-muted">
+                                                                {{ $product->category->name }}</small></p>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +217,7 @@
 
                             <form wire:submit.prevent="handleSubmit">
                                 <div class="col">
-                                    <div wire:ignore class="form-outline">
+                                    <div wire:ignore.self class="form-outline">
                                         <input type="number" wire:model="payment" class="form-control rounded mb-3"
                                             id="payment" id="typeNumber">
                                         <label class="form-label" for="payment">Input Payment</label>

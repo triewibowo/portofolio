@@ -74,9 +74,9 @@
                                 <th width="5%">No</th>
                                 <th>Name</th>
                                 <th>Category</th>
-                                <th>Description</th>
+                                <th width="400px">Description</th>
                                 <th>Qty</th>
-                                <th>Price</th>
+                                <th width="160px">Price</th>
                                 <th width="120px"> </th>
                             </tr>
                         </thead>
@@ -137,133 +137,131 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Edit-->
-<div wire:ignore.self class="modal fade" id="staticBackdrop" data-mdb-backdrop="static" data-mdb-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header mb-3">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
-                <button wire:click="resetFilters()" type="button" class="btn-close" data-mdb-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="container justify-content-center">
-                <form enctype="multipart/form-data">
-                    <div class="form-group mb-3 p-1">
-                        <input wire:model='productId' type="hidden" class="form-control">
-                        <label>Product Name</label>
-                        <input wire:model='name' type="text" class="form-control" name="name"
-                            value="{{ old('name') }}">
-                        @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-3 p-1">
-                        <label>Product Category</label>
-                        <select wire:model='category_id' class="form-select" aria-label="Default select example">
-                            <option selected value="0">Open this select menu</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">
-                                    {{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('category_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-3 p-1">
-                        <label>Product Description</label>
-                        <textarea wire:model='desc' class="form-control" name="desc"
-                            value="{{ old('desc') }}"></textarea>
-                        @error('desc')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-3 p-1">
-                        <label>Product Quantity</label>
-                        <input wire:model='qty' type="number" class="form-control" name="qty"
-                            value="{{ old('qty') }}">
-                        @error('qty')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-3 p-1">
-                        <label>Product Price</label>
-                        <input wire:model='price' type="number" class="form-control" name="price"
-                            value="{{ old('price') }}">
-                        @error('price')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button wire:click="resetFilters()" type="button" class="btn"
-                    data-mdb-dismiss="modal">Close</button>
-                <button wire:click.prevent="update()" type="button" class="btn"
-                    style="background-color: #20B2AA; color:aliceblue">Save</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Edit Image-->
-<div wire:ignore.self class="modal fade" id="staticBackdrop1" data-mdb-backdrop="static" data-mdb-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header mb-3">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Image</h5>
-                <button wire:click="resetFilters()" type="button" class="btn-close" data-mdb-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="container justify-content-center">
-                <form enctype="multipart/form-data">
-                    <div class="form-group mb-3">
-                        <div class="custom-file">
-                            <input wire:model="image" type="file"
-                                value="{{ asset('storage/app/public/livewire-tmp/' . $image) }}"
-                                class="custom-file-upload" id="image" onchange="previewImage()">
-                            @error('image')
+    <!-- Modal Edit-->
+    <div wire:ignore.self class="modal fade" id="staticBackdrop" data-mdb-backdrop="static"
+        data-mdb-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header mb-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                    <button wire:click="resetFilters()" type="button" class="btn-close" data-mdb-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="container justify-content-center">
+                    <form enctype="multipart/form-data">
+                        <div class="form-group mb-3 p-1">
+                            <input wire:model='productId' type="hidden" class="form-control">
+                            <label>Product Name</label>
+                            <input wire:model='name' type="text" class="form-control" name="name"
+                                value="{{ old('name') }}">
+                            @error('name')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                            <div class="mb-2 mt-2">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <div class="row">
-                                            <div class="col">
-                                                Preview Image
-                                            </div>
-                                            <div class="col d-flex justify-content-end">
-                                                <label for="image" type="button" class="btn">
-                                                    <strong>Upload</strong>
-                                                </label>
+                        </div>
+                        <div class="form-group mb-3 p-1">
+                            <label>Product Category</label>
+                            <select wire:model='category_id' class="form-select" aria-label="Default select example">
+                                <option selected value="0">Open this select menu</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-3 p-1">
+                            <label>Product Description</label>
+                            <textarea wire:model='desc' class="form-control" name="desc"
+                                value="{{ old('desc') }}"></textarea>
+                            @error('desc')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-3 p-1">
+                            <label>Product Quantity</label>
+                            <input wire:model='qty' type="number" class="form-control" name="qty"
+                                value="{{ old('qty') }}">
+                            @error('qty')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-3 p-1">
+                            <label>Product Price</label>
+                            <input wire:model='price' type="number" class="form-control" name="price"
+                                value="{{ old('price') }}">
+                            @error('price')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button wire:click="resetFilters()" type="button" class="btn"
+                        data-mdb-dismiss="modal">Close</button>
+                    <button wire:click.prevent="update()" type="button" class="btn"
+                        style="background-color: #20B2AA; color:aliceblue">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Image-->
+    <div wire:ignore.self class="modal fade" id="staticBackdrop1" data-mdb-backdrop="static"
+        data-mdb-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header mb-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Image</h5>
+                    <button wire:click="resetFilters()" type="button" class="btn-close" data-mdb-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="container justify-content-center">
+                    <form enctype="multipart/form-data">
+                        <div class="form-group mb-3">
+                            <div class="custom-file">
+                                <input wire:model="image" type="file" class="custom-file-upload" id="image"
+                                    onchange="previewImage()">
+                                @error('image')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                <div class="mb-2 mt-2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col">
+                                                    Preview Image
+                                                </div>
+                                                <div class="col d-flex justify-content-end">
+                                                    <label for="image" type="button" class="btn">
+                                                        <strong>Upload</strong>
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body">
-                                        @if ($image)
-                                            <img wire:ignore src="{{ asset('storage/public/images/' . $image) }}"
-                                                class="img-preview img-fluid" alt="Preview Image">
-                                        @endif
+                                        <div class="card-body">
+                                            @if ($image)
+                                                <img wire:ignore src="{{ asset('storage/public/images/' . $image) }}"
+                                                    class="img-preview img-fluid" alt="Preview Image">
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button wire:click="resetFilters()" type="button" class="btn"
+                        data-mdb-dismiss="modal">Close</button>
+                    <button wire:click.prevent="updateImage()" type="button" class="btn"
+                        style="background-color: #20B2AA; color:aliceblue">Save</button>
+                </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button wire:click="resetFilters()" type="button" class="btn"
-                    data-mdb-dismiss="modal">Close</button>
-                <button wire:click.prevent="updateImage()" type="button" class="btn"
-                    style="background-color: #20B2AA; color:aliceblue">Save</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
 </div>
 
 @push('script-custom')

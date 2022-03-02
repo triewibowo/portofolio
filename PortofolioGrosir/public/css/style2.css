@@ -192,6 +192,13 @@ input[type="file"] {
     color: #F7F6FB;
 }
 
+#desc {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
 #cashierNotif {
     display: inline-block;
     white-space: nowrap;

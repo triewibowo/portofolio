@@ -13,6 +13,16 @@ class Role extends Component
     public $name,$email;
     public $userId;
 
+    
+
+    // public function permission(){
+    //     $role = ModelRole::create(['name' => 'admin']);
+    //     $permission = Permission::create(['name' => 'CRUD']);
+
+    //     $role->givePermissionTo($permission);
+    //     $permission->assignRole($role);
+    // }
+
     public function api(){
         $users = User::with('roles')->get();
         $auth  = Auth::user();
@@ -26,8 +36,7 @@ class Role extends Component
         return view('livewire.role', compact('users'));
         }else{
             return abort('403');
-        }
-        
+        } 
     }
 
     public function resetField(){
