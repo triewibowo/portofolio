@@ -54,7 +54,7 @@
                                     aria-label="Default select example">
                                     <option value="" selected>Category</option>
                                     @foreach ($categories as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
