@@ -29,7 +29,8 @@ class Cart extends Component
         // History
         $history = Transaction::with('user')->orderBy('created_at', 'DESC')->whereDate('created_at', $current)->get();
         $categories = Category::all();
-        $products = ModelsProduct::where('name', 'like', '%'.$this->search.'%')->orWhere('category_id', 'LIKE',  '%' . $this->search . '%')->OrderBy('created_at', 'DESC')->paginate(4);
+        $products = ModelsProduct::join('categories', 'products.category_id', '=', 'categories.id')->where('products.name', 'like', '%'.$this->search.'%')->orWhere('categories.name', 'LIKE',  '%' . $this->search . '%')->OrderBy('products.created_at', 'DESC')->paginate(4);
+        // dd($products);
         $condition = new \Darryldecode\Cart\CartCondition([
             'name'      => 'pajak',
             'type'      => 'tax',
