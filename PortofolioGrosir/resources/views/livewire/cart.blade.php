@@ -49,7 +49,7 @@
                                         <div class="col-md-8">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $product->name }}</h5>
-                                                <p class="card-text" id="desc" style="height: 50px;">
+                                                <p class="card-text text-muted" id="desc" style="height: 50px;">
                                                     {{ $product->desc }}
                                                 </p>
                                                 <span class="card-text fw-bold">
