@@ -24,7 +24,8 @@ class Product extends Component
     public function render()
     {
         if(Auth()->user()->can('CRUD')){
-            $products = ModelsProduct::join('categories', 'products.category_id', '=', 'categories.id')->where('products.name', 'like', '%'.$this->search.'%')->orWhere('categories.name', 'LIKE',  '%' . $this->search . '%')->OrderBy('products.created_at', 'DESC')->paginate(15);
+            // $products = ModelsProduct::join('categories', 'products.category_id', '=', 'categories.id')->where('products.name', 'like', '%'.$this->search.'%')->orWhere('categories.name', 'LIKE',  '%' . $this->search . '%')->OrderBy('products.created_at', 'DESC')->paginate(15);
+            $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->search.'%');})->OrderBy('products.created_at', 'DESC')->paginate(15);
             $categories = ModelsCategory::all();
             return view('livewire.product', compact('products', 'categories'));
         }else{
