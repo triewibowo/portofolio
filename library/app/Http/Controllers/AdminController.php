@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 class AdminController extends Controller
 {
     public function transaction(){
-        if (auth()->user()->role('petugass')){
+        if (auth()->user()->role('petugas')){
             return view('admin.transaction.index', [
                 'judul' => 'Transaction'
             ]);
@@ -19,11 +19,11 @@ class AdminController extends Controller
     }
 
     public function test_spatie(){
-        // $role = Role::create(['name' => 'petugas']);
-        // $permission = Permission::create(['name' => 'index peminjaman']);
+        $role = Role::create(['name' => 'petugas']);
+        $permission = Permission::create(['name' => 'index peminjaman']);
 
-        // $role->givePermissionTo($permission);
-        // $permission->assignRole($role);
+        $role->givePermissionTo($permission);
+        $permission->assignRole($role);
 
         // $user = auth()->user();
         // $user->assignRole('petugas');

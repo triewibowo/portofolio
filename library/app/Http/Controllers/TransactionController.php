@@ -9,6 +9,7 @@ use App\Models\TransactionDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class TransactionController extends Controller
@@ -242,8 +243,8 @@ class TransactionController extends Controller
         // $role->givePermissionTo($permission);
         // $permission->assignRole($role);
 
-        $user = User::with('roles')->get();
-        return $user;
+        // $user = User::with('roles')->get();
+        // return $user;
 
         // $user = auth()->user();
         // $user->assignRole('petugas');
