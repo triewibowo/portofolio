@@ -39,6 +39,7 @@ class Category extends Component
 
         $this->resetFilter();
         return session()->flash('success', 'Successfully'); 
+        redirect('category');
     }
 
     public function edit($id){

@@ -61,8 +61,8 @@ class Product extends Component
             'price'         => $this->price,
         ]);
 
-        $this->resetFilters();   
-        return session()->flash('success', 'Data has been created');      
+        return session()->flash('success', 'Data has been created'); 
+        $this->resetFilters();       
     }
 
     public function resetFilters(){
@@ -111,6 +111,7 @@ class Product extends Component
 
         $this->resetFilters();
         return session()->flash('update', 'Data has been updated'); 
+        redirect('products');
     }
 
     public function updateImage(){
@@ -134,6 +135,7 @@ class Product extends Component
 
         $this->resetFilters();
         return session()->flash('update', 'Image has been updated'); 
+        redirect('products');
     }
 
     public function deleteId($id){

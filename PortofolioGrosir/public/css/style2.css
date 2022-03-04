@@ -184,12 +184,18 @@ input[type="file"] {
 }
 
 #cashier {
-    display: inline-block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 20ch;
     color: #F7F6FB;
+}
+
+#cashier2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 15ch;
 }
 
 #desc {
