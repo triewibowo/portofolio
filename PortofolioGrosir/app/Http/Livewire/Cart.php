@@ -18,7 +18,6 @@ class Cart extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $search = '';
-    public $orderBy = '';
     public $payment;
 
     public $tax = "+10%";
@@ -31,7 +30,7 @@ class Cart extends Component
         $history = Transaction::with('user')->orderBy('created_at', 'DESC')->whereDate('created_at', $current)->get();
         $categories = Category::all();
         // $products = ModelsProduct::join('categories', 'products.category_id', '=', 'categories.id')->where('products.name', 'like', '%'.$this->search.'%')->orWhere('categories.name', 'LIKE',  '%' . $this->search . '%')->OrderBy('products.created_at', 'DESC')->paginate(4);
-        $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->orderBy.'%');})->inRandomOrder()->paginate(4);
+        $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->search.'%');})->orderby('created_at', 'DESC')->paginate(4);
         // dd($products);
         $condition = new \Darryldecode\Cart\CartCondition([
             'name'      => 'pajak',
