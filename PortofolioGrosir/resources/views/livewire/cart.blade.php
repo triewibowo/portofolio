@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="input-group mt-3 mb-2">
-                                <select wire:model="search" class="form-select form-control rounded"
+                                <select wire:model="orderBy" class="form-select form-control rounded"
                                     aria-label="Default select example">
                                     <option value="" selected>Category</option>
                                     @foreach ($categories as $item)
