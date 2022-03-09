@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use DB;
 
 class Product extends Component
 {
@@ -23,7 +24,7 @@ class Product extends Component
 
     public function render()
     {
-        if(Auth()->user()->can('CRUD')){
+        if(Auth()->user()->can('isAdmin')){
             // $products = ModelsProduct::join('categories', 'products.category_id', '=', 'categories.id')->where('products.name', 'like', '%'.$this->search.'%')->orWhere('categories.name', 'LIKE',  '%' . $this->search . '%')->OrderBy('products.created_at', 'DESC')->paginate(15);
             $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->search.'%');})->OrderBy('products.created_at', 'DESC')->paginate(15);
             $categories = ModelsCategory::all();
@@ -52,17 +53,25 @@ class Product extends Component
             $imageName
         );
 
-        ModelsProduct::create([
-            'name'          => $this->name,
-            'image'         => $imageName,
-            'desc'          => $this->desc,
-            'category_id'   => $this->category_id,
-            'qty'           => $this->qty,
-            'price'         => $this->price,
-        ]);
-
-        return session()->flash('success', 'Data has been created'); 
-        $this->resetFilters();       
+        DB::beginTransaction();
+        try{
+            ModelsProduct::create([
+                'name'          => $this->name,
+                'image'         => $imageName,
+                'desc'          => $this->desc,
+                'category_id'   => $this->category_id,
+                'qty'           => $this->qty,
+                'price'         => $this->price,
+            ]);
+            
+            $this->resetFilters(); 
+            DB::commit();
+            return session()->flash('success', 'Data has been created'); 
+        }catch (\Throwable $th){
+            DB::rollback();
+            return session()->flash('error', $th);
+        }
+             
     }
 
     public function resetFilters(){
@@ -98,20 +107,29 @@ class Product extends Component
             'price'         => 'required',
         ]);
 
-        
-
-        $product = ModelsProduct::findOrFail($this->productId);
-        $product->update([
+        DB::beginTransaction();
+        try{
+            $product = ModelsProduct::findOrFail($this->productId);
+            $product->update([
             'name'          => $this->name,
             'desc'          => $this->desc,
             'category_id'   => $this->category_id,
             'qty'           => $this->qty,
             'price'         => $this->price,
-        ]);
+            ]); 
 
-        $this->resetFilters();
-        return session()->flash('update', 'Data has been updated'); 
-        redirect('products');
+            
+            $this->resetFilters();
+            DB::commit();
+            return session()->flash('update', 'Data has been updated'); 
+            redirect('products');
+        }catch (\Throwable $th){
+            DB::rollback();
+            return session()->flash('error', $th);
+        }
+        
+
+        
     }
 
     public function updateImage(){
@@ -128,14 +146,23 @@ class Product extends Component
             $imageName
         );
 
-        $product = ModelsProduct::findOrFail($this->productId);
-        $product->update([
+        DB::beginTransaction();
+        try{
+            $product = ModelsProduct::findOrFail($this->productId);
+            $product->update([
             'image'          => $imageName
-        ]);
+            ]);
 
-        $this->resetFilters();
-        return session()->flash('update', 'Image has been updated'); 
-        redirect('products');
+            
+            $this->resetFilters();
+            DB::commit();
+            return session()->flash('update', 'Image has been updated'); 
+            redirect('products');
+        }catch (\Throwable $th){
+            DB::rollback();
+            return session()->flash('error', $th);
+        }
+        
     }
 
     public function deleteId($id){
@@ -143,7 +170,14 @@ class Product extends Component
     }
 
     public function delete(){
-        $category = ModelsProduct::findOrFail($this->deleteId)->delete();
-        return session()->flash('update', 'Data has been Deleted'); 
+        DB::beginTransaction();
+        try{
+            $category = ModelsProduct::findOrFail($this->deleteId)->delete();
+            DB::commit();
+            return session()->flash('update', 'Data has been Deleted');
+        }catch (\Throwable $th){
+            DB::rollback();
+            return session()->flash('error', $th);
+        } 
     }
 }

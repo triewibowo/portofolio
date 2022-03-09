@@ -24,58 +24,81 @@
     </div>
     <div class="container">
         <div class="card">
-            <div class="card-header">
-                <h4>Permision</h4>
-            </div>
             <div class="card-body">
-                <form wire:submit.prevent="roleCreate">
-                    <div class="form-group">
-                        <label>Role Name</label>
-                        <input wire:model='name' type="text" class="form-control">
-                        @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <button class="btn mt-3" type="submit"
-                        style="background-color: #20B2AA; color:aliceblue;">Grant</button>
-                    <button wire:click="resetField()" class="btn btn-warning mt-3" type="button">Clear</button>
-                </form>
+                <table class="table table-bordered table-hovered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Email</th>
+                            <th width="90px"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $index => $user)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->role }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <i wire:click="roleEdit({{ $user->id }})" class='bx bxs-edit'
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                        style="font-size: 20px; color: #20B2AA; cursor: pointer;"></i>
+
+                                    <i wire:click="roleRemove({{ $user->id }})" class='bx bxs-trash'
+                                        style="font-size: 20px;cursor: pointer; color:sienna;"></i>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <div>
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-bordered table-hovered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Email</th>
-                                <th width="90px"> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($users as $index => $user)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->roles }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>
-                                        <i wire:click="roleEdit({{ $user->id }})" class='bx bxs-edit'
-                                            data-mdb-toggle="modal" data-mdb-target="#staticBackdrop"
-                                            style="font-size: 20px; color: #20B2AA; cursor: pointer;"></i>
-
-                                        <i wire:click="roleRemove({{ $user->id }})" class='bx bxs-trash'
-                                            style="font-size: 20px;cursor: pointer; color:sienna;"></i>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+    </div>
+    <div wire:ignore.self class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
+                    <button wire:click="resetFilter()" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
+                <div class="container justify-content-center">
+                    <form enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input wire:model='categoryId' type="hidden" class="form-control mb-2">
+                            <label>User Name</label>
+                            <input wire:model='name' type="text" class="form-control" name="name"
+                                value="{{ old('name') }}">
+                            @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+
+                            <label>Role Name</label>
+                            <input wire:model='role' type="text" class="form-control" name="name"
+                                value="{{ old('role') }}">
+                            @error('role')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+
+                            <label>Email</label>
+                            <input wire:model='email' type="email" class="form-control" name="name"
+                                value="{{ old('email') }}">
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button wire:click="resetFilter()" type="button" class="btn"
+                        data-bs-dismiss="modal">Close</button>
+                    <button wire:click.prevent="store()" type="button" class="btn"
+                        style="background-color: #20B2AA; color:aliceblue">Save</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>

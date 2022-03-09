@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Livewire\Component;
+use DB;
 
 class Category extends Component
 {
@@ -20,7 +21,7 @@ class Category extends Component
 
     public function render()
     {   
-        if(Auth()->user()->can('CRUD')){
+        if(Auth()->user()->can('isAdmin')){
         $categories = ModelsCategory::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(10);
         return view('livewire.category', compact('categories'));
         }else{
@@ -33,13 +34,20 @@ class Category extends Component
             'name'          => 'required',
         ]);
 
-        ModelsCategory::updateOrCreate(['id' => $this->categoryId],[
-            'name'          => $this->name
-        ]);
-
-        $this->resetFilter();
-        return session()->flash('success', 'Successfully'); 
-        redirect('category');
+        DB::beginTransaction();
+        try{
+            ModelsCategory::updateOrCreate(['id' => $this->categoryId],[
+                'name'          => $this->name
+            ]);
+    
+            $this->resetFilter();
+            DB::commit();
+            return session()->flash('success', 'Successfully'); 
+            redirect('category');
+        }catch (\Throwable $th){
+            DB::rollback();
+            return session()->flash('error', $th);
+         }
     }
 
     public function edit($id){

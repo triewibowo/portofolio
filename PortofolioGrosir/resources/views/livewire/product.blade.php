@@ -68,44 +68,46 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-bordered table-hovered table-striped" id="example2">
-                        <thead>
-                            <tr>
-                                <th width="5%">No</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th width="400px">Description</th>
-                                <th>Qty</th>
-                                <th width="160px">Price</th>
-                                <th width="120px"> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($products as $index => $product)
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hovered table-striped">
+                            <thead>
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->category->name }}</td>
-                                    <td>{{ $product->desc }}</td>
-                                    <td>{{ $product->qty }}</td>
-                                    <td>{{ 'Rp ' . number_format($product->price, 2, ',', '.') }}</td>
-                                    <td>
-                                        <i wire:click="edit({{ $product->id }})" class='bx bx-show-alt'
-                                            data-mdb-toggle="modal" data-mdb-target="#staticBackdrop1"
-                                            style="font-size: 20px; color: salmon; cursor: pointer;"></i>
-
-                                        <i wire:click="edit({{ $product->id }})" class='bx bxs-edit'
-                                            data-mdb-toggle="modal" data-mdb-target="#staticBackdrop"
-                                            style="font-size: 20px; color: #20B2AA; cursor: pointer;"></i>
-
-                                        <i wire:click="deleteId({{ $product->id }})" class='bx bxs-trash'
-                                            style="font-size: 20px;cursor: pointer; color:sienna;"
-                                            data-mdb-toggle="modal" data-mdb-target="#exampleModal"></i>
-                                    </td>
+                                    <th width="5%">No</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th width="400px">Description</th>
+                                    <th>Qty</th>
+                                    <th width="160px">Price</th>
+                                    <th width="120px"> </th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($products as $index => $product)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ $product->desc }}</td>
+                                        <td>{{ $product->qty }}</td>
+                                        <td>{{ 'Rp ' . number_format($product->price, 2, ',', '.') }}</td>
+                                        <td>
+                                            <i wire:click="edit({{ $product->id }})" class='bx bx-show-alt'
+                                                data-mdb-toggle="modal" data-mdb-target="#staticBackdrop1"
+                                                style="font-size: 20px; color: salmon; cursor: pointer;"></i>
+
+                                            <i wire:click="edit({{ $product->id }})" class='bx bxs-edit'
+                                                data-mdb-toggle="modal" data-mdb-target="#staticBackdrop"
+                                                style="font-size: 20px; color: #20B2AA; cursor: pointer;"></i>
+
+                                            <i wire:click="deleteId({{ $product->id }})" class='bx bxs-trash'
+                                                style="font-size: 20px;cursor: pointer; color:sienna;"
+                                                data-mdb-toggle="modal" data-mdb-target="#exampleModal"></i>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center pt-1">

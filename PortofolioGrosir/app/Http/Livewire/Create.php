@@ -7,6 +7,7 @@ use App\Models\Category as ModelsCategory;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Livewire\Component;
+use DB;
 
 class Create extends Component
 {
@@ -49,6 +50,8 @@ class Create extends Component
             $imageName
         );
 
+        DB::beginTransaction();
+        try{
         ModelsProduct::updateOrCreate(['id' => $this->productId],[
             'name'          => $this->name,
             'image'         => $imageName,
@@ -61,8 +64,12 @@ class Create extends Component
         session()->flash('info', 'Product Created Successfully');
 
         $this->resetFilters();
-        
+        DB::commit();
         redirect('products');
+     }catch (\Throwable $th){
+        DB::rollback();
+        return session()->flash('error', $th);
+     }
     }
 
     public function resetFilters(){
