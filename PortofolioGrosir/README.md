@@ -7,6 +7,25 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Requirement
+
+Install
+1. https://github.com/darryldecode/laravelshoppingcart
+2. https://github.com/asantibanez/livewire-charts
+3. https://spatie.be/docs/laravel-permission/v5/installation-laravel
+4. https://docs.laravel-excel.com/3.1/getting-started/installation.html
+
+First
+1. php artisan migrate
+
+Second
+1. Register
+2. App/Http/Livewire/Role.php
+3. buka komen function permision()
+4. tambahkan /permission/role di link localhost di web
+
+Selesai..
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
