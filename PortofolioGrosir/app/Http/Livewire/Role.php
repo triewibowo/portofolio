@@ -23,6 +23,10 @@ class Role extends Component
 
     //     $role->givePermissionTo($permission);
     //     $permission->assignRole($role);
+
+    //     $user = auth()->user();
+    //     $user->assignRole('admin');
+    //     return $user;
     // }
 
     public function api(){
