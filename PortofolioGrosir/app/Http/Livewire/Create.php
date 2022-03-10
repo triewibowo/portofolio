@@ -17,7 +17,7 @@ class Create extends Component
 
     public function render()
     {
-        if(Auth()->user()->can('CRUD')){
+        if(Auth()->user()->can('isAdmin')){
         $products = ModelsProduct::with('category')->OrderBy('created_at', 'DESC')->get();
         $categories = ModelsCategory::all();
         return view('livewire.create', compact('products', 'categories'));

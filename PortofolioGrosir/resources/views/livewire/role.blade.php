@@ -68,22 +68,28 @@
                 </div>
                 <div class="container justify-content-center">
                     <form enctype="multipart/form-data">
-                        <div class="form-group">
-                            <input wire:model='categoryId' type="hidden" class="form-control mb-2">
+                        <div class="form-group mb-3 p-1">
+                            <input wire:model='categoryId' type="hidden" class="form-control">
                             <label>User Name</label>
                             <input wire:model='name' type="text" class="form-control" name="name"
                                 value="{{ old('name') }}">
                             @error('name')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-
-                            <label>Role Name</label>
-                            <input wire:model='role' type="text" class="form-control" name="name"
-                                value="{{ old('role') }}">
+                        </div>
+                        <div class="form-group mb-3 p-1">
+                            <label>Role</label>
+                            <select wire:model='role' class="form-select" aria-label="Default select example">
+                                <option selected value="0">Your Role</option>
+                                <option value="admin" {{ Auth::user()->role == 'admin' ? 'selected' : '' }}>Admin
+                                </option>
+                                <option value="user">User</option>
+                            </select>
                             @error('role')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-
+                        </div>
+                        <div class="form-group mb-3 p-1">
                             <label>Email</label>
                             <input wire:model='email' type="email" class="form-control" name="name"
                                 value="{{ old('email') }}">
