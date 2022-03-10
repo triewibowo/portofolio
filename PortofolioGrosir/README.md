@@ -17,16 +17,9 @@ Install
 
 First
 1. php artisan migrate
-
-Second
-1. Register
-2. App/Http/Livewire/Role.php
-3. buka komen function permision()
-4. tambahkan /permission/role di link localhost di web
+2. php artisan db:seed UsersSeeder --class
 
 Selesai..
-
-## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
