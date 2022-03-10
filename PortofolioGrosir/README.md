@@ -19,6 +19,18 @@ First
 1. php artisan migrate
 2. php artisan db:seed UsersSeeder --class
 
+Features
+1. Impressive Cart System
+2. Notif for empty stock
+3. Management User
+4. Permission Role System
+5. Export Excel for Report
+6. Pretty and Informative Dashboard
+7. Easy to Use
+8. Many More !
+
+what are you waiting for !? Try it !
+
 Selesai..
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
