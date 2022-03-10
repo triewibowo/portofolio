@@ -32,6 +32,7 @@
                                      <th>Invoice Number</th>
                                      <th>Total</th>
                                      <th>Pay</th>
+                                     <th>Date</th>
                                  </tr>
                              </thead>
                              <tbody>
@@ -41,6 +42,7 @@
                                          <td>{{ $item->invoice_number }}</td>
                                          <td>{{ 'Rp ' . number_format($item->total, 2, ',', '.') }}</td>
                                          <td>{{ 'Rp ' . number_format($item->pay, 2, ',', '.') }}</td>
+                                         <td>{{ $item->created_at->format('h:i A j F, Y ') }}</td>
                                      </tr>
                                  @endforeach
                              </tbody>
@@ -72,6 +74,7 @@
                                      <th>Invoice Number</th>
                                      <th>Total</th>
                                      <th>Pay</th>
+                                     <th>Date</th>
                                  </tr>
                              </thead>
                              <tbody>
@@ -81,6 +84,7 @@
                                          <td>{{ $item->invoice_number }}</td>
                                          <td>{{ 'Rp ' . number_format($item->total, 2, ',', '.') }}</td>
                                          <td>{{ 'Rp ' . number_format($item->pay, 2, ',', '.') }}</td>
+                                         <td>{{ $item->created_at->format('h:i A j F, Y ') }}</td>
                                      </tr>
                                  @endforeach
                              </tbody>

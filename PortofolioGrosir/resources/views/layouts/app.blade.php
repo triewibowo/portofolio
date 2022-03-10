@@ -142,6 +142,10 @@
                         <i class='bx bx-bookmark nav_icon'></i>
                         <span class="nav_name">History</span>
                     </a>
+                    <a href="{{ url('/report') }}" class="nav_link {{ request()->is('report') ? 'active' : '' }}">
+                        <i class='bx bxs-report nav_icon'></i>
+                        <span class="nav_name">Report</span>
+                    </a>
                 </div>
             </div>
             <div>

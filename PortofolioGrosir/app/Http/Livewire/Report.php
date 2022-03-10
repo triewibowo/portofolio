@@ -35,6 +35,7 @@ class Report extends Component
     {
         $current = Carbon::now()->format('Ymd');
 
+        if(Auth()->user()->can('isAdmin')){
         $profit_today = Transaction::where('invoice_number', 'like', '%'.$this->search.'%')
         ->whereDate('created_at', $current)
         ->whereMonth('created_at', date('m'))
@@ -46,6 +47,9 @@ class Report extends Component
 
         // dd($profit_month);
         return view('livewire.report', compact('profit_today', 'profit_month'));
+        }else{
+            return abort('404');
+        }
     }
 
     public function updatingSearch()
