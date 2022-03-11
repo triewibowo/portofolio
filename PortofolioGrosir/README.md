@@ -19,7 +19,7 @@ First
 1. php artisan migrate
 2. php artisan db:seed UsersSeeder --class
 
-Features
+## Features
 1. Impressive Cart System
 2. Notif for empty stock
 3. Management User
@@ -30,6 +30,10 @@ Features
 8. Many More !
 
 what are you waiting for !? Try it !
+
+## admin id :
+admin@admin.com
+12345678
 
 Selesai..
 

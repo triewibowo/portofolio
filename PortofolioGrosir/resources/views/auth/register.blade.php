@@ -26,7 +26,7 @@
                                     </h5>
 
                                     <div class="form-outline mb-4">
-                                        <input type="text" id="form2Example17"
+                                        <input type="text"
                                             class="form-control form-control-lg @error('name') is-invalid @enderror"
                                             name="name" value="{{ old('name') }}" autocomplete="email" autofocus />
                                         <label class="form-label" for="form2Example17">Name</label>
@@ -39,7 +39,7 @@
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="email" id="form2Example17"
+                                        <input type="email"
                                             class="form-control form-control-lg @error('email') is-invalid @enderror"
                                             name="email" value="{{ old('email') }}" autocomplete="email" autofocus />
                                         <label class="form-label" for="form2Example17">Email address</label>
@@ -52,7 +52,7 @@
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <input type="password" id="form2Example27"
+                                        <input type="password"
                                             class="form-control form-control-lg @error('password') is-invalid @enderror"
                                             name="password" autocomplete="new-password" />
                                         <label class="form-label" for="form2Example27">Password</label>

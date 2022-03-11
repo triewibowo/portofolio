@@ -172,7 +172,7 @@ class Product extends Component
     public function delete(){
         DB::beginTransaction();
         try{
-            $category = ModelsProduct::findOrFail($this->deleteId)->delete();
+            $products = ModelsProduct::findOrFail($this->deleteId)->delete();
             DB::commit();
             return session()->flash('update', 'Data has been Deleted');
         }catch (\Throwable $th){

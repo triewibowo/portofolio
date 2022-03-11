@@ -47,7 +47,7 @@ a {
 }
 
 .header_toggle {
-    color: #20B2AA;
+    color: #0E185F;
     font-size: 1.5rem;
     cursor: pointer
 }
@@ -71,7 +71,7 @@ a {
     left: -30%;
     width: var(--nav-width);
     height: 100vh;
-    background-color: #20B2AA;
+    background-color: #0E185F;
     padding: .5rem 1rem 0 0;
     transition: .5s;
     z-index: var(--z-fixed)
@@ -188,7 +188,7 @@ input[type="file"] {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 20ch;
-    color: #F7F6FB;
+    color: #0E185F;
 }
 
 #cashier2 {
@@ -216,16 +216,12 @@ input[type="file"] {
 
 #icon {
     font-size: 30px;
-    opacity: 0.3;
-    color: #20B2AA;
+    color: #0E185F;
+
 }
 
 #icon2 {
-    position: absolute;
-    bottom: 20px;
-    right: 35px;
-    font-size: 20px;
-    color: #F7F6FB;
+    color: #0E185F;
 }
 
 #historyChart {

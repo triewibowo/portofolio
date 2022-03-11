@@ -236,7 +236,7 @@ class Cart extends Component
                         }
 
                         \Cart::session(Auth()->id())->clear();
-                        $this->payment = 0;
+                        $this->payment = '';
                         $this->dispatchBrowserEvent('format');
                             DB::commit();
                             return session()->flash('success', 'Transaction successfully');

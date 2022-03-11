@@ -5,7 +5,7 @@
 @endsection
 <div>
     <div>
-        <h3 class="text-muted">History</h3>
+        <h3 id="icon2">History</h3>
     </div>
     <div class="row d-flex justify-content-center mt-70 mb-70">
         <div class="col-md-6">

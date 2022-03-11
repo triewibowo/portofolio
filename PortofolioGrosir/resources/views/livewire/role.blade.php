@@ -2,7 +2,7 @@
     <div class="mb-4">
         <div class="row">
             <div class="col">
-                <h3 class="text-muted">Role Permission</h3>
+                <h3 id="icon2">Role Permission</h3>
             </div>
             <div class="col-3">
                 @if (session()->has('success'))
@@ -23,38 +23,70 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <table class="table table-bordered table-hovered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th width="90px"> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $index => $user)
+                <div class="card-header">
+                    <h5 class="text-muted">User Management</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hovered table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    <i wire:click="roleEdit({{ $user->id }})" class='bx bxs-edit'
-                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                                        style="font-size: 20px; color: #20B2AA; cursor: pointer;"></i>
-
-                                    <i wire:click="roleRemove({{ $user->id }})" class='bx bxs-trash'
-                                        style="font-size: 20px;cursor: pointer; color:sienna;"></i>
-                                </td>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Email</th>
+                                <th width="90px"> </th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $index => $user)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->role }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>
+                                        <i wire:click="roleEdit({{ $user->id }})" class='bx bxs-edit'
+                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                            style="font-size: 20px; color: #20B2AA; cursor: pointer;"></i>
+
+                                        <i wire:click="deleteId({{ $user->id }})" class='bx bxs-trash'
+                                            style="font-size: 20px;cursor: pointer; color:sienna;"
+                                            data-mdb-toggle="modal" data-mdb-target="#exampleModal"></i>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+
+    {{-- modal delete --}}
+    <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Confirm</h5>
+                    <button type="button" class="close" data-mdb-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true close-btn">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn close-btn" data-mdb-dismiss="modal">Close</button>
+                    <button type="button" wire:click.prevent="roleRemove()" class="btn btn-danger close-modal"
+                        data-mdb-dismiss="modal">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- modal Edit --}}
     <div wire:ignore.self class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -67,9 +99,9 @@
                 <div class="container justify-content-center">
                     <form enctype="multipart/form-data">
                         <div class="form-group mb-3 p-1">
-                            <input wire:model='categoryId' type="hidden" class="form-control">
+                            <input wire:model='userId' type="hidden" class="form-control">
                             <label>User Name</label>
-                            <input wire:model='name' type="text" class="form-control" name="name"
+                            <input wire:model="name" type="text" class="form-control" name="name"
                                 value="{{ old('name') }}">
                             @error('name')
                                 <small class="text-danger">{{ $message }}</small>
@@ -99,7 +131,7 @@
                 <div class="modal-footer">
                     <button wire:click="resetFilter()" type="button" class="btn"
                         data-bs-dismiss="modal">Close</button>
-                    <button wire:click.prevent="store()" type="button" class="btn"
+                    <button wire:click.prevent="store()" type="button" class="btn btn-success"
                         style="background-color: #20B2AA; color:aliceblue">Save</button>
                 </div>
                 </form>

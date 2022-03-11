@@ -2,7 +2,7 @@
     <div class="mb-4">
         <div class="row">
             <div class="col">
-                <h3 class="text-muted">Create Product</h3>
+                <h3 id="icon2">Create Product</h3>
             </div>
             <div class="col-3">
                 @if (session()->has('success'))
@@ -64,13 +64,14 @@
                                                     Preview Image
                                                 </div>
                                                 <div class="col d-flex justify-content-end">
-                                                    <label for="image" type="button" class="btn">
+                                                    <label for="image" type="button" class="btn"
+                                                        style="background-color: #E8FFC2; color:#0E185F;">
                                                         <strong>Upload</strong>
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class=" card-body">
                                             @if ($image)
                                                 <img src="{{ $image->temporaryUrl() }}" class="img-fluid"
                                                     alt="Preview Image">
@@ -121,8 +122,8 @@
                 <div class="modal-footer">
                     <button wire:click="resetFilters()" type="button" class="btn"
                         data-bs-dismiss="modal">Close</button>
-                    <button wire:click.prevent="store()" type="button" class="btn"
-                        style="background-color: #20B2AA; color:aliceblue">Save</button>
+                    <button wire:click.prevent="store()" type="button" class="btn btn-success"
+                        color:aliceblue">Save</button>
                 </div>
                 </form>
             </div>

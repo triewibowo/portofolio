@@ -1,18 +1,18 @@
 <div>
     <div class="mb-4">
-        <h3 class="text-muted">Cashier</h3>
+        <h3 id="icon2">Cashier</h3>
     </div>
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7 mb-4">
             <div class="card p-1">
                 <div class="card-header">
                     <h5 class="text-muted">Product List</h5>
                 </div>
                 <div class="card-body p-2">
                     <div class="row">
-                        <div class="col-2">
-                            <div class="input-group mt-3 mb-2">
+                        <div class="col-3">
+                            <div class="input-group mt-2 mb-2">
                                 <select wire:model="search" class="form-select form-control rounded"
                                     aria-label="Default select example">
                                     <option value="" selected>Category</option>
@@ -22,15 +22,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col">
 
                         </div>
-                        <div class="col-4">
-                            <div class="input-group mt-3 mb-2">
+                        <div class="col">
+                            <div class="input-group mt-2 mb-2">
                                 <input wire:model="search" id="search-input" type="search" class="form-control rounded"
                                     placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="button" class="btn"
-                                    style="background-color: #20B2AA; color:aliceblue;">search</button>
                             </div>
                         </div>
                     </div>
@@ -86,88 +84,97 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div class="card p-1 mb-4">
+            <div class="card p-1 mb-4" style="background-color: #E8FFC2">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-3">
                             <h5 class="text-muted">Cart</h5>
                         </div>
-                        <div class="col-10">
+                        <div class="col">
                             <h5 class="text-muted text-end">{{ Auth::user()->name }}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     @if (session()->has('error'))
-                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div class="alert alert-success d-flex align-items-center" role="alert"
+                            style="background-color: rgba(50, 205, 50, 0.25)">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
                                 <use xlink:href="#exclamation-triangle-fill" />
                             </svg>
                             <div>
                                 {{ session('error') }}
                             </div>
+                            <button type="button" class="btn-close" id="close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
                         </div>
                     @endif
                     @if (session()->has('success'))
-                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <div class="alert alert-success d-flex align-items-center" role="alert"
+                            style="background-color: rgba(50, 205, 50, 0.25)">
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
                                 <use xlink:href="#check-circle-fill" />
                             </svg>
                             <div>
                                 {{ session('success') }}
                             </div>
+                            <button type="button" class="btn-close" id="close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
                         </div>
                     @endif
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Quantity</th>
-                                <th scope="col">Action</th>
-                                <th scope="col" class="text-end">Price</th>
-                                <th scope="col" class="text-end"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($carts as $index=>$cart)
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $index + 1 }}</th>
-                                    <td>
-                                        <span href="#">{{ $cart['name'] }}</span>
-                                    </td>
-                                    <td scope="row" class="text-center">
-                                        {{ $cart['qty'] }}
-                                    </td>
-                                    <td>
-                                        <i wire:click="increaseItem('{{ $cart['rowId'] }}')"
-                                            class='bx bxs-plus-circle' data-bs-toggle="tooltip" title="Add Quantity"
-                                            style="font-size: 30px;cursor: pointer; color:#00B74A;"></i>
-                                        <i wire:click="decreaseItem('{{ $cart['rowId'] }}')"
-                                            class='bx bxs-minus-circle' data-bs-toggle="tooltip" title="Less Quantity"
-                                            style="font-size: 30px;cursor: pointer; color:#FFA900;"></i>
-                                    </td>
-                                    <td scope="row" class="text-end">
-                                        {{ 'Rp' . number_format($cart['price'], 2, ',', '.') }}
-                                    </td>
-                                    <td>
-                                        <i wire:click="removeItem('{{ $cart['rowId'] }}')" class='bx bxs-x-circle'
-                                            data-bs-toggle="tooltip" title="Delete"
-                                            style="font-size: 20px;cursor: pointer; color:#F93154;"></i>
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col" class="text-center">Quantity</th>
+                                    <th scope="col">Action</th>
+                                    <th scope="col" class="text-end">Price</th>
+                                    <th scope="col" class="text-end"></th>
                                 </tr>
-                            @empty
-                                <td colspan="6">
-                                </td>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse ($carts as $index=>$cart)
+                                    <tr>
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>
+                                            <span href="#">{{ $cart['name'] }}</span>
+                                        </td>
+                                        <td scope="row" class="text-center">
+                                            {{ $cart['qty'] }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button wire:click="increaseItem('{{ $cart['rowId'] }}')"
+                                                    type="button" class="btn btn-success btn-sm">+</button>
+                                                <button wire:click="decreaseItem('{{ $cart['rowId'] }}')"
+                                                    type="button"
+                                                    class="btn btn-success btn-sm border-start border-light">-</button>
+                                            </div>
+                                        </td>
+                                        <td scope="row" class="text-end">
+                                            {{ 'Rp' . number_format($cart['price'], 2, ',', '.') }}
+                                        </td>
+                                        <td>
+                                            <i wire:click="removeItem('{{ $cart['rowId'] }}')"
+                                                class='bx bxs-x-circle' data-bs-toggle="tooltip" title="Delete"
+                                                style="font-size: 20px;cursor: pointer; color:#F93154;"></i>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <td colspan="6">
+                                    </td>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col">
-                    <div class="card">
+                <div class="col mb-4">
+                    <div class="card" style="background-color: #E8FFC2">
                         <div class="card-header text-center">
                             <h5 class="text-muted">Transaction History</h5>
                         </div>
@@ -187,7 +194,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card">
+                    <div class="card" style="background-color: #E8FFC2">
                         <div class="card-body" style="height: 27rem;">
                             <div class="row">
                                 <div class="col">
@@ -241,9 +248,10 @@
                                     </div>
                                 </div>
                                 <div class="mt-2">
-                                    <button wire:ignore type="submit" id="saveButton" disabled class="btn btn-block"
-                                        style="background-color: #20B2AA; color:aliceblue;" id="saveButton"><i
-                                            class="fas fa-save fa-lg"></i> Save Transaction</button>
+                                    <button wire:ignore type="submit" id="saveButton" disabled
+                                        class="btn btn-block btn-success" color:aliceblue;" id="saveButton"><i
+                                            class="fas fa-save fa-lg"></i> Save
+                                        Transaction</button>
                                 </div>
                             </form>
                         </div>

@@ -13,24 +13,9 @@ use Livewire\Component;
 
 class Role extends Component
 {
-    public $name,$email;
-    public $userId;
+    public $name,$email,$userId,$role;
     public $search = '';
-    public $role;
-
-    
-
-    // public function permission(){
-    //     $role = ModelRole::create(['name' => 'admin']);
-    //     $permission = Permission::create(['name' => 'CRUD']);
-
-    //     $role->givePermissionTo($permission);
-    //     $permission->assignRole($role);
-
-    //     $user = auth()->user();
-    //     $user->assignRole('admin');
-    //     return $user;
-    // }
+    public $deleteId = '';
 
     public function api(){
         $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->search.'%');})->OrderBy('products.created_at', 'DESC')->paginate(15);
@@ -80,7 +65,19 @@ class Role extends Component
         $this->email = $user->email;
     }
 
-    public function roleRemove($id){
-        $user = User::findOrFail($id)->delete();
+    public function deleteId($id){
+        $this->deleteId = $id;
+    }
+
+    public function roleRemove(){
+        DB::beginTransaction();
+        try{
+            $user = User::findOrFail($this->deleteId)->delete();
+            DB::commit();
+            return session()->flash('update', 'Data has been Deleted');
+        }catch (\Throwable $th){
+            DB::rollback();
+            return session()->flash('error', $th);
+        } 
     }
 }

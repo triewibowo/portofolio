@@ -2,7 +2,7 @@
     <div class="mb-4">
         <div class="row">
             <div class="col">
-                <h3 class="text-muted">Product Data</h3>
+                <h3 id="icon2">Product Data</h3>
             </div>
             <div class="col-3">
                 @if (session()->has('success'))
@@ -41,14 +41,13 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col">
-                            <div class="input-group mt-3 mb-2">
-                                <button wire:click="create()" type="button" class="btn"
-                                    style="background-color: #20B2AA; color:aliceblue;">
+                            <div class="input-group mt-2 mb-2">
+                                <button wire:click="create()" type="button" class="btn btn-success">
                                     Create Product
                                 </button>
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col">
                             <div class="input-group mt-3 mb-2">
                                 <select wire:model="search" class="form-select form-control rounded"
                                     aria-label="Default select example">
@@ -63,8 +62,6 @@
                             <div class="input-group mt-3 mb-2">
                                 <input wire:model="search" id="search-input" type="search" class="form-control rounded"
                                     placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="button" class="btn"
-                                    style="background-color: #20B2AA; color:aliceblue;">search</button>
                             </div>
                         </div>
                     </div>
@@ -93,7 +90,7 @@
                                         <td>
                                             <i wire:click="edit({{ $product->id }})" class='bx bx-show-alt'
                                                 data-mdb-toggle="modal" data-mdb-target="#staticBackdrop1"
-                                                style="font-size: 20px; color: salmon; cursor: pointer;"></i>
+                                                style="font-size: 22px; color: salmon; cursor: pointer;"></i>
 
                                             <i wire:click="edit({{ $product->id }})" class='bx bxs-edit'
                                                 data-mdb-toggle="modal" data-mdb-target="#staticBackdrop"
@@ -130,8 +127,7 @@
                         <p>Are you sure want to delete?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn close-btn" data-mdb-dismiss="modal"
-                            style="background-color: #20B2AA; color: #fff;">Close</button>
+                        <button type="button" class="btn close-btn" data-mdb-dismiss="modal">Close</button>
                         <button type="button" wire:click.prevent="delete()" class="btn btn-danger close-modal"
                             data-mdb-dismiss="modal">Yes, Delete</button>
                     </div>
@@ -202,8 +198,7 @@
                 <div class="modal-footer">
                     <button wire:click="resetFilters()" type="button" class="btn"
                         data-mdb-dismiss="modal">Close</button>
-                    <button wire:click.prevent="update()" type="button" class="btn"
-                        style="background-color: #20B2AA; color:aliceblue">Save</button>
+                    <button wire:click.prevent="update()" type="button" class="btn btn-success">Save</button>
                 </div>
                 </form>
             </div>
@@ -237,7 +232,8 @@
                                                     Preview Image
                                                 </div>
                                                 <div class="col d-flex justify-content-end">
-                                                    <label for="image" type="button" class="btn">
+                                                    <label for="image" type="button" class="btn"
+                                                        style="background-color: #E8FFC2; color:#0E185F;">
                                                         <strong>Upload</strong>
                                                     </label>
                                                 </div>
@@ -257,8 +253,7 @@
                 <div class="modal-footer">
                     <button wire:click="resetFilters()" type="button" class="btn"
                         data-mdb-dismiss="modal">Close</button>
-                    <button wire:click.prevent="updateImage()" type="button" class="btn"
-                        style="background-color: #20B2AA; color:aliceblue">Save</button>
+                    <button wire:click.prevent="updateImage()" type="button" class="btn btn-success">Save</button>
                 </div>
                 </form>
             </div>

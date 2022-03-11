@@ -51,7 +51,7 @@
     @livewireStyles
 </head>
 
-<body id="body-pd" style="background-color: #F5F5F5;">
+<body id="body-pd" style="background-color: #E4FBFF;">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <header class="header shadow" id="header">
 
@@ -163,8 +163,8 @@
 
 
     <!--Container Main start-->
-    <main style="background-color: #F5F5F5;">
-        <div class="container-fluid" style="height: 70px; background-color: #F5F5F5;"></div>
+    <main style="background-color: #E4FBFF;">
+        <div class="container-fluid" style="height: 70px; background-color: #E4FBFF;"></div>
         @yield('content')
         {{ isset($slot) ? $slot : null }}
     </main>

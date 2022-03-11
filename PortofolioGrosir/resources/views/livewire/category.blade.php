@@ -3,7 +3,7 @@
         <div class="mb-4">
             <div class="row">
                 <div class="col">
-                    <h3 class="text-muted">Category Data</h3>
+                    <h3 id="icon2">Category Data</h3>
                 </div>
                 <div class="col-3">
                     @if (session()->has('success'))
@@ -32,9 +32,8 @@
                     <div class="row mb-3">
                         <div class="col">
                             <div class="input-group mt-3">
-                                <button type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop"
-                                    style="background-color: #20B2AA; color:aliceblue;">
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">
                                     Create Category
                                 </button>
                             </div>
@@ -43,8 +42,6 @@
                             <div class="input-group mt-3">
                                 <input wire:model="search" id="search-input" type="search" class="form-control rounded"
                                     placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="button" class="btn"
-                                    style="background-color: #20B2AA; color:aliceblue;">search</button>
                             </div>
                         </div>
                     </div>
@@ -102,8 +99,7 @@
                     <div class="modal-footer">
                         <button wire:click="resetFilter()" type="button" class="btn"
                             data-bs-dismiss="modal">Close</button>
-                        <button wire:click.prevent="store()" type="button" class="btn"
-                            style="background-color: #20B2AA; color:aliceblue">Save</button>
+                        <button wire:click.prevent="store()" type="button" class="btn btn-success">Save</button>
                     </div>
                     </form>
                 </div>
