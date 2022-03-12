@@ -50,7 +50,7 @@ class Create extends Component
             $imageName
         );
 
-        dd($imageName);
+        // dd($imageName);
 
         DB::beginTransaction();
         try{

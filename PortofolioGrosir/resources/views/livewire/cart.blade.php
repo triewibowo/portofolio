@@ -226,12 +226,20 @@
 
                             <form wire:submit.prevent="handleSubmit">
                                 <div class="col">
-                                    <div wire:ignore.self class="form-outline">
+                                    <div wire:ignore.self class="input-group flex-nowrap mb-3">
+                                        <span class="input-group-text" id="addon-wrapping"
+                                            style="background-color: #198754; color: white">$</span>
+                                        <input wire:model="payment" id="payment" type="number" class="form-control"
+                                            placeholder="Input Payment" aria-label="Username"
+                                            aria-describedby="addon-wrapping">
+                                        <input type="hidden" id="total" value="{{ $summary['total'] }}">
+                                    </div>
+                                    {{-- <div wire:ignore.self class="form-outline">
                                         <input type="number" wire:model="payment" class="form-control rounded mb-3"
                                             id="payment" id="typeNumber">
                                         <label class="form-label" for="payment">Input Payment</label>
                                         <input type="hidden" id="total" value="{{ $summary['total'] }}">
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="row">
                                     <div class="col">
@@ -300,5 +308,9 @@
                 saveButton.disabled = false
             }
         }
+
+        document.querySelectorAll('.form-outline').forEach((formOutline) => {
+            new mdb.Input(formOutline).init();
+        });
     </script>
 @endpush

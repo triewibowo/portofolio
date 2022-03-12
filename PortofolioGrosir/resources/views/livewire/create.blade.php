@@ -51,8 +51,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <div class="custom-file">
-                                <input wire:model="image" type="file" class="custom-file-upload" id="image"
-                                    onchange="previewImage()">
+                                <input wire:model="image" type="file" class="custom-file-upload" id="image">
                                 @error('image')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
