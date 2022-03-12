@@ -42,13 +42,15 @@ class Create extends Component
             'price'         => 'required',
         ]);
 
-        $imageName = md5($this->image.microtime().'.'.$this->image->extension());
+        $imageName = md5($this->image.microtime()).'.'.$this->image->extension();
 
         Storage::putFileAs(
             'public/images',
             $this->image,
             $imageName
         );
+
+        dd($imageName);
 
         DB::beginTransaction();
         try{
