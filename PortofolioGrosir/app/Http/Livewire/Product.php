@@ -21,13 +21,15 @@ class Product extends Component
     public $search = '';
     public $name,$image,$desc,$qty,$price,$category_id,$productId;
     public $deleteId = '';
+    public $numbPage = 0;
 
     public function render()
     {
         if(Auth()->user()->can('isAdmin')){
             // $products = ModelsProduct::join('categories', 'products.category_id', '=', 'categories.id')->where('products.name', 'like', '%'.$this->search.'%')->orWhere('categories.name', 'LIKE',  '%' . $this->search . '%')->OrderBy('products.created_at', 'DESC')->paginate(15);
-            $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->search.'%');})->OrderBy('products.created_at', 'DESC')->paginate(15);
+            $products = ModelsProduct::with(['category'])->where('name', 'like', '%'.$this->search.'%')->orWhereHas('category',function($query){$query->where('name', 'like', '%'.$this->search.'%');})->OrderBy('products.created_at', 'DESC')->paginate($this->numbPage);
             $categories = ModelsCategory::all();
+            // dd($products);
             return view('livewire.product', compact('products', 'categories'));
         }else{
             return abort('403');

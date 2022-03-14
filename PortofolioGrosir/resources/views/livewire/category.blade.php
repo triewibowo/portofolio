@@ -26,26 +26,50 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-header">
-                    <h5 class="text-muted">Category List</h5>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                                data-mdb-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                <a class="navbar-brand" href="#">Category List</a>
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <button class="btn btn-outline-success" type="button"
+                                            data-mdb-ripple-color="dark" data-mdb-toggle="modal"
+                                            data-mdb-target="#staticBackdrop">
+                                            Create
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <select wire:model="numbPage" class="form-select form-control rounded me-3"
+                                            aria-label="Default select example">
+                                            <option value="5" selected>Page</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                                <form class="d-flex input-group w-auto">
+                                    <input wire:model="search" type="search" class="form-control"
+                                        placeholder="Type query" aria-label="Search" />
+                                    <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark">
+                                        Search
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <div class="input-group mt-3">
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop">
-                                    Create Category
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mt-3">
-                                <input wire:model="search" id="search-input" type="search" class="form-control rounded"
-                                    placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table table-bordered table-hovered table-striped" id="example2">
+                    <table class="table table-hovered table-striped" id="example2">
                         <thead>
                             <tr>
                                 <th width="5%">No</th>
@@ -81,7 +105,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
-                        <button wire:click="resetFilter()" type="button" class="btn-close" data-bs-dismiss="modal"
+                        <button wire:click="resetFilter()" type="button" class="btn-close" data-mdb-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
                     <div class="container justify-content-center">
@@ -98,8 +122,9 @@
                     </div>
                     <div class="modal-footer">
                         <button wire:click="resetFilter()" type="button" class="btn"
-                            data-bs-dismiss="modal">Close</button>
-                        <button wire:click.prevent="store()" type="button" class="btn btn-success">Save</button>
+                            data-mdb-dismiss="modal">Close</button>
+                        <button wire:click.prevent="store()" type="button" class="btn"
+                            style="background-color: #20B2AA; color:aliceblue">Save</button>
                     </div>
                     </form>
                 </div>

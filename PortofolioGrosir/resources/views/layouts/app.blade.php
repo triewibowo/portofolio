@@ -30,6 +30,7 @@
     <link href="{{ asset('css/style2.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet">
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

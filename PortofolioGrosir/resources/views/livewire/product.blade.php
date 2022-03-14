@@ -36,37 +36,62 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-header">
-                    <h5 class="text-muted">Product List</h5>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                                data-mdb-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                <a class="navbar-brand" href="#">Product List</a>
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <button wire:click="create()" class="btn btn-outline-success" type="button"
+                                            data-mdb-ripple-color="dark">
+                                            Create
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <select wire:model="search" class="form-select form-control rounded me-3"
+                                            aria-label="Default select example">
+                                            <option value="" selected>Category</option>
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <select wire:model="numbPage" class="form-select form-control rounded me-3"
+                                            aria-label="Default select example">
+                                            <option value="5" selected>Page</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                                <form class="d-flex input-group w-auto">
+                                    <input wire:model="search" type="search" class="form-control"
+                                        placeholder="Type query" aria-label="Search" />
+                                    <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark">
+                                        Search
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col">
-                            <div class="input-group mt-2 mb-2">
-                                <button wire:click="create()" type="button" class="btn btn-success">
-                                    Create Product
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mt-3 mb-2">
-                                <select wire:model="search" class="form-select form-control rounded"
-                                    aria-label="Default select example">
-                                    <option value="" selected>Category</option>
-                                    @foreach ($categories as $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mt-3 mb-2">
-                                <input wire:model="search" id="search-input" type="search" class="form-control rounded"
-                                    placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                            </div>
-                        </div>
-                    </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hovered table-striped">
+                        <table class="table table-hovered table-striped">
                             <thead>
                                 <tr>
                                     <th width="5%">No</th>
@@ -172,8 +197,7 @@
                         </div>
                         <div class="form-group mb-3 p-1">
                             <label>Product Description</label>
-                            <textarea wire:model='desc' class="form-control" name="desc"
-                                value="{{ old('desc') }}"></textarea>
+                            <textarea wire:model='desc' class="form-control" name="desc" value="{{ old('desc') }}"></textarea>
                             @error('desc')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

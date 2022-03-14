@@ -18,6 +18,8 @@ class Report extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
     public $search1 = '';
+    public $numbPage1 = 10;
+    public $numbPage2 = 10;
 
     public function api(){
         $current = Carbon::now()->format('Ymd');
@@ -39,10 +41,10 @@ class Report extends Component
         $profit_today = Transaction::where('invoice_number', 'like', '%'.$this->search.'%')
         ->whereDate('created_at', $current)
         ->whereMonth('created_at', date('m'))
-        ->paginate(15);
+        ->paginate($this->numbPage1);
 
         $profit_month = Transaction::where('invoice_number', 'like', '%'.$this->search1.'%')
-        ->paginate(15);
+        ->paginate($this->numbPage2);
 
 
         // dd($profit_month);

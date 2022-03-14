@@ -18,11 +18,12 @@ class Category extends Component
     public $search = '';
     public $name;
     public $categoryId;
+    public $numbPage = 0;
 
     public function render()
     {   
         if(Auth()->user()->can('isAdmin')){
-        $categories = ModelsCategory::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate(10);
+        $categories = ModelsCategory::where('name', 'like', '%'.$this->search.'%')->OrderBy('created_at', 'DESC')->paginate($this->numbPage);
         return view('livewire.category', compact('categories'));
         }else{
             return abort('403');
@@ -43,7 +44,6 @@ class Category extends Component
             $this->resetFilter();
             DB::commit();
             return session()->flash('success', 'Successfully'); 
-            redirect('category');
         }catch (\Throwable $th){
             DB::rollback();
             return session()->flash('error', $th);

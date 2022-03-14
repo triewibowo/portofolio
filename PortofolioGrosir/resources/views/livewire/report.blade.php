@@ -12,18 +12,42 @@
      <div class="row d-flex justify-content-center mt-70 mb-70">
          <div class="col-md-6">
              <div class="main-card mb-3 card">
-                 <div class="card-body">
-                     <div class="row">
-                         <div class="col">
-                             <h5 class="card-title">Income per Day</h5>
-                         </div>
-                         <div class="col">
-                             <div class="input-group">
-                                 <input wire:model="search" id="search-input" type="search" class="form-control rounded"
-                                     placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                 <div class="card-header">
+                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                         <div class="container-fluid">
+                             <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                                 data-mdb-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                                 aria-expanded="false" aria-label="Toggle navigation">
+                                 <i class="fas fa-bars"></i>
+                             </button>
+                             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                 <a class="navbar-brand" href="#">Income per Day</a>
+                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                     <li class="nav-item">
+                                         <a class="nav-link" href="#"></a>
+                                     </li>
+                                     <li class="nav-item">
+                                         <select wire:model="numbPage1" class="form-select form-control rounded me-3"
+                                             aria-label="Default select example">
+                                             <option value="10" selected>Page</option>
+                                             <option value="15">15</option>
+                                             <option value="50">50</option>
+                                             <option value="100">100</option>
+                                         </select>
+                                     </li>
+                                 </ul>
+                                 <form class="d-flex input-group w-auto">
+                                     <input wire:model="search" type="search" class="form-control"
+                                         placeholder="Type query" aria-label="Search" />
+                                     <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark">
+                                         Search
+                                     </button>
+                                 </form>
                              </div>
                          </div>
-                     </div>
+                     </nav>
+                 </div>
+                 <div class="card-body">
                      <div class="table-responsive">
                          <div class="scroll-area">
                              <table class="table table-bordered table-hovered table-striped mt-3" id="example2">
@@ -55,19 +79,42 @@
          </div>
          <div class="col-md-6">
              <div class="main-card mb-3 card">
-                 <div class="card-body">
-                     <div class="row">
-                         <div class="col">
-                             <h5 class="card-title">All Transactions</h5>
-                         </div>
-                         <div class="col">
-                             <div class="input-group">
-                                 <input wire:model="search1" id="search-input" type="search"
-                                     class="form-control rounded" placeholder="Search" aria-label="Search"
-                                     aria-describedby="search-addon" />
+                 <div class="card-header">
+                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                         <div class="container-fluid">
+                             <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                                 data-mdb-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                                 aria-expanded="false" aria-label="Toggle navigation">
+                                 <i class="fas fa-bars"></i>
+                             </button>
+                             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                 <a class="navbar-brand" href="#">All Transactions</a>
+                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                     <li class="nav-item">
+                                         <a class="nav-link" href="#"></a>
+                                     </li>
+                                     <li class="nav-item">
+                                         <select wire:model="numbPage2" class="form-select form-control rounded me-3"
+                                             aria-label="Default select example">
+                                             <option value="10" selected>Page</option>
+                                             <option value="15">15</option>
+                                             <option value="50">50</option>
+                                             <option value="100">100</option>
+                                         </select>
+                                     </li>
+                                 </ul>
+                                 <form class="d-flex input-group w-auto">
+                                     <input wire:model="search1" type="search" class="form-control"
+                                         placeholder="Type query" aria-label="Search" />
+                                     <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark">
+                                         Search
+                                     </button>
+                                 </form>
                              </div>
                          </div>
-                     </div>
+                     </nav>
+                 </div>
+                 <div class="card-body">
                      <div class="table-responsive">
                          <div class="scroll-area">
                              <table class="table table-bordered table-hovered table-striped mt-3" id="example2">

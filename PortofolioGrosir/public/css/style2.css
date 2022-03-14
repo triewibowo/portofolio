@@ -162,6 +162,20 @@ a {
     right: 25px;
 }
 
+.createLink {
+    box-shadow: inset 0 0 0 0 #0E185F;
+    color: #000;
+    margin: 0 -.25rem;
+    padding: 0 .25rem;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+
+.createLink:hover {
+    box-shadow: inset 150px 0 0 0 #0E185F;
+    color: white;
+}
+
+
 #close {
     position: absolute;
     top: 20px;
