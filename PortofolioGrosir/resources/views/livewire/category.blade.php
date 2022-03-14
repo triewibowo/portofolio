@@ -59,7 +59,7 @@
                                 </ul>
                                 <form class="d-flex input-group w-auto">
                                     <input wire:model="search" type="search" class="form-control"
-                                        placeholder="Type query" aria-label="Search" />
+                                        placeholder="Type here" aria-label="Search" />
                                     <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark">
                                         Search
                                     </button>

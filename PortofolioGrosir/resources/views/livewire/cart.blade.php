@@ -7,31 +7,44 @@
         <div class="col-md-7 mb-4">
             <div class="card p-1">
                 <div class="card-header">
-                    <h5 class="text-muted">Product List</h5>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                                data-mdb-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                <a class="navbar-brand" href="#">Product List</a>
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <select wire:model="search" class="form-select form-control rounded me-3"
+                                            aria-label="Default select example">
+                                            <option value="" selected>Category</option>
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"></a>
+                                    </li>
+                                </ul>
+                                <form class="d-flex input-group w-auto">
+                                    <input wire:model="search" type="search" class="form-control"
+                                        placeholder="Type here" aria-label="Search" />
+                                    <button class="btn btn-outline-primary" type="button" data-mdb-ripple-color="dark">
+                                        Search
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
                 <div class="card-body p-2">
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="input-group mt-2 mb-2">
-                                <select wire:model="search" class="form-select form-control rounded"
-                                    aria-label="Default select example">
-                                    <option value="" selected>Category</option>
-                                    @foreach ($categories as $item)
-                                        <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-
-                        </div>
-                        <div class="col">
-                            <div class="input-group mt-2 mb-2">
-                                <input wire:model="search" id="search-input" type="search" class="form-control rounded"
-                                    placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         @forelse ($products as $product)
                             <div class="col-md-6 mt-2">
